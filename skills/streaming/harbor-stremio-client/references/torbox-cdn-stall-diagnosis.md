@@ -34,10 +34,10 @@ powershell.exe -NoProfile -Command 'Get-Process -Name "Harbor*" | Select-Object 
 # WSL→PowerShell gotcha: single-quote the whole -Command or bash eats $_
 
 # settings keys (single-line JSON → parse with python)
-python3 -c "import json;d=json.load(open('/mnt/c/Users/RAJAT/AppData/Roaming/app.harbor/settings.json'));[print(k,'=',repr(v)[:300]) for k,v in d.items() if any(s in k.lower() for s in ['hwdec','cache','full','download','mpv','stream'])]"
+python3 -c "import json;d=json.load(open('/mnt/c/Users/<user>/AppData/Roaming/app.harbor/settings.json'));[print(k,'=',repr(v)[:300]) for k,v in d.items() if any(s in k.lower() for s in ['hwdec','cache','full','download','mpv','stream'])]"
 
 # stall counts + applied caps + source URLs (log rewrites per mpv instance — re-grep after restarts)
-LOG=/mnt/c/Users/RAJAT/AppData/Roaming/app.harbor/harbor-mpv.log
+LOG=/mnt/c/Users/<user>/AppData/Roaming/app.harbor/harbor-mpv.log
 grep -E "demuxer-max|readahead" $LOG | sort -u
 grep -cE "underrun|Discontinuous source PTS" $LOG
 grep -E "Opening https?://" $LOG

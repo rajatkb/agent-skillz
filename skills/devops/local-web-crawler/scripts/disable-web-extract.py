@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Disable the broken web_extract tool by patching toolsets.py.
 
-Usage: python3 /home/rajat-g14/.hermes/scripts/disable-web-extract.py
+Usage: python3 ~/.hermes/scripts/disable-web-extract.py
 
 Run after every `pip install --upgrade hermes-agent` since upgrades
 overwrite the patched file.
 """
 
 import sys
+from pathlib import Path
 
-path = "/home/rajat-g14/.asdf/installs/python/3.11.0/lib/python3.11/site-packages/toolsets.py"
+path = str(Path.home() / ".asdf" / "installs" / "python" / "3.11.0" / "lib" / "python3.11" / "site-packages" / "toolsets.py")
 
 try:
     with open(path) as f:

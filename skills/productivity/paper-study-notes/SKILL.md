@@ -5,7 +5,7 @@ description: Study an arXiv paper and write summary/study notes into the user's 
 
 # Paper Study Notes → Obsidian Vault
 
-Workflow for turning an arXiv paper link into a top-level note in the user's vault at `$VAULT_WIN_PATH` (`/mnt/c/Users/RAJAT/vault/`). Existing vault entries: `conference/`, `jepa_notes/`, `model_tricks/`, `video_diffusion_alignment/` — the vault is for ML/research study notes.
+Workflow for turning an arXiv paper link into a top-level note in the user's vault at `$VAULT_WIN_PATH` (`/mnt/c/Users/<user>/vault/`). Existing vault entries: `conference/`, `jepa_notes/`, `model_tricks/`, `video_diffusion_alignment/` — the vault is for ML/research study notes.
 
 ## Steps
 
@@ -50,10 +50,10 @@ Workflow for turning an arXiv paper link into a top-level note in the user's vau
 
 5. **Write the vault note** — top-level entry (no folder unless the user says otherwise). Note naming: `[Short Title] — paper study notes` style. Content: metadata block (title/authors/date/abstract), a real summary, key concepts/equations, and study notes connecting to the user's other work (JEPA, video diffusion, model tricks) where relevant. See "Note style" below for the user's format preferences.
 
-6. **Sync to the Windows vault** — the REPO copy is the source of truth: `~/Work/rajatkb.github.io/data/vault/`. Write the note there (or `cp` it after authoring), then run the one-shot push:
+6. **Sync to the Windows vault** — the REPO copy is the source of truth: `~/Work/<username>.github.io/data/vault/`. Write the note there (or `cp` it after authoring), then run the one-shot push:
    ```bash
-   export VAULT_WIN_PATH=/mnt/c/Users/RAJAT/vault/
-   bash ~/Work/rajatkb.github.io/scripts/sync-vault.sh   # no args = one-shot Repo → Windows push
+   export VAULT_WIN_PATH=/mnt/c/Users/<user>/vault/
+   bash ~/Work/<username>.github.io/scripts/sync-vault.sh   # no args = one-shot Repo → Windows push
    ```
    (`npm run watch` in the repo = the continuous watcher; the script has no pull mode exposed.) The repo vault also feeds the Next.js blog — after syncing, `npm run build` compiles the note into `/notes/<name>`. When the user says "compile and push": run the build, then `git add data/vault/<note> && git commit && git push origin main`. Note: the build regenerates `app/tag-data.json` (tracked, shows as modified) — commit it only if asked; the note itself is the deliverable.
 
@@ -80,7 +80,7 @@ Workflow for turning an arXiv paper link into a top-level note in the user's vau
 ## Pitfalls
 
 - **web_extract is broken** (DDGS backend) — never use it for the abs page; curl + regex meta tags is fast and reliable.
-- **NEVER write the note only into the Windows vault** (`/mnt/c/Users/RAJAT/vault/`) and then run the sync — the script's `rsync --delete` pushes Repo → Windows, so a Windows-only file is treated as "not in source" and DELETED. Always author into the repo copy (`data/vault/`) first, then push.
+- **NEVER write the note only into the Windows vault** (`/mnt/c/Users/<user>/vault/`) and then run the sync — the script's `rsync --delete` pushes Repo → Windows, so a Windows-only file is treated as "not in source" and DELETED. Always author into the repo copy (`data/vault/`) first, then push.
 - If the user interrupts mid-task with "wait, what are you doing?" — STOP and explain the plan/status before continuing. They want transparency on toolchain changes (installs, venvs) as well as task progress.
 - Never pip-install extraction libs into the Hermes runtime (asdf py3.11) — use a throwaway /tmp venv with `env -u PYTHONPATH`.
 - If the PDF's extract_text returns empty/garbled (scanned or image-based PDF), the paper needs OCR — tell the user rather than fabricating content.

@@ -6,7 +6,7 @@ The repo lives on WSL's ext4 filesystem (`/home/...`), but Obsidian runs on Wind
 
 ## Solution: rsync Mirroring + Git-Diff Verification (Push-Only)
 
-Keep `data/vault/` in the repo (git-tracked, CI-safe). Maintain a copy at `C:\Users\RAJAT\vault` for Obsidian to open. The `scripts/sync-vault.sh` script keeps them in sync with `rsync --delete`, always pushing **Repo → Windows**.
+Keep `data/vault/` in the repo (git-tracked, CI-safe). Maintain a copy at `C:\Users\<user>\vault` for Obsidian to open. The `scripts/sync-vault.sh` script keeps them in sync with `rsync --delete`, always pushing **Repo → Windows**.
 
 The script runs a **git diff pre-scan** first to detect every new/modified/untracked file under `data/vault/` since `HEAD`. After the rsync, it verifies each detected file landed at the destination. This catches files that rsync might miss due to WSL mount timestamp quirks.
 
@@ -19,9 +19,9 @@ The script runs a **git diff pre-scan** first to detect every new/modified/untra
 sudo apt-get install -y rsync inotify-tools
 
 # Seed the Windows copy with initial vault content
-cp -a data/vault/. /mnt/c/Users/RAJAT/vault/
+cp -a data/vault/. /mnt/c/Users/<user>/vault/
 
-# Open C:\Users\RAJAT\vault in Obsidian
+# Open C:\Users\<user>\vault in Obsidian
 ```
 
 ### Workflow: One-Shot Push
@@ -54,7 +54,7 @@ The `--watch` mode uses `inotifywait` (from `inotify-tools`) to monitor `data/va
 
 ### How It Works
 
-- **Push (default):** Runs `git diff --diff-filter=ACMRT HEAD -- data/vault/` + `git ls-files --others` to list every new/modified/untracked file. Prints the list, then `rsync -av --delete data/vault/ /mnt/c/Users/RAJAT/vault/` mirrors repo into Windows. Excludes `.obsidian/` entirely (never pushed to Windows). Verifies each detected file exists at the destination — warns if any are missing.
+- **Push (default):** Runs `git diff --diff-filter=ACMRT HEAD -- data/vault/` + `git ls-files --others` to list every new/modified/untracked file. Prints the list, then `rsync -av --delete data/vault/ /mnt/c/Users/<user>/vault/` mirrors repo into Windows. Excludes `.obsidian/` entirely (never pushed to Windows). Verifies each detected file exists at the destination — warns if any are missing.
 
 - **Watch (`--watch`):** Starts `inotifywait -m -r` on `data/vault/` (native WSL ext4 filesystem). On file changes (modify, create, delete, move), debounces for 1.5s of quiet, then runs the same push logic.
 

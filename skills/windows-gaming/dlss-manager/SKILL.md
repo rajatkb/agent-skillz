@@ -42,7 +42,7 @@ python3 ~/.hermes/scripts/dlss_manager.py /mnt/d/SomeGame status
 # roll back (originals are never deleted)
 python3 ~/.hermes/scripts/dlss_manager.py /mnt/d/SomeGame undo
 # apply DLSSTweaks next to the game EXE (legit Nexus zip; see DLSSTweaks section)
-python3 ~/.hermes/scripts/dlss_manager.py /mnt/d/SomeGame tweak-install --tweak-zip /mnt/c/Users/RAJAT/Downloads/DLSSTweaks-550-0-310-5-0-1767931303.zip
+python3 ~/.hermes/scripts/dlss_manager.py /mnt/d/SomeGame tweak-install --tweak-zip /mnt/c/Users/<user>/Downloads/DLSSTweaks-550-0-310-5-0-1767931303.zip
 # remove DLSSTweaks (DLSS DLLs + backups untouched)
 python3 ~/.hermes/scripts/dlss_manager.py /mnt/d/SomeGame tweak-remove
 # apply a researched per-game config profile (agent researches; script applies)
@@ -110,7 +110,7 @@ No cache hides the break: `status`/`update` always re-fetch the live page. If a 
 
 ## DLSSTweaks — zip-based install (security-validated)
 
-**Security**: the GitHub org `DLSSTweaks/.github` "latest release" (ver.4.0.6, mid-2026) is an **impersonator** — its zip is a mod-manager bundle (obfuscated JS task-broker, encrypted pack.bin, RPCS3 test ELFs, MSI with no wrapper DLLs). The legitimate tool is emoose's, distributed only via [Nexus Mods site/mods/550](https://www.nexusmods.com/site/mods/550). The user has the legit zip downloaded: `C:\Users\RAJAT\Downloads\DLSSTweaks-550-0-310-5-0-1767931303.zip` (Nexus build 0.310.5.0, DLSS 4.5 presets L/M support).
+**Security**: the GitHub org `DLSSTweaks/.github` "latest release" (ver.4.0.6, mid-2026) is an **impersonator** — its zip is a mod-manager bundle (obfuscated JS task-broker, encrypted pack.bin, RPCS3 test ELFs, MSI with no wrapper DLLs). The legitimate tool is emoose's, distributed only via [Nexus Mods site/mods/550](https://www.nexusmods.com/site/mods/550). The user has the legit zip downloaded: `C:\Users\<user>\Downloads\DLSSTweaks-550-0-310-5-0-1767931303.zip` (Nexus build 0.310.5.0, DLSS 4.5 presets L/M support).
 
 **How it works (per Nexus docs)**: the zip extracts **next to the game's main EXE** (UE games: `*-Win64-Shipping.exe`). `dxgi.dll` is a wrapper that can be **renamed** to `dxgi.dll` / `winmm.dll` / `XInput1_3.dll` / `XInput1_4.dll` (best success rates). Only the `nvngx.dll` wrapping method needs the registry signature override (`EnableNvidiaSigOverride.reg`) — we never use that method, so no registry changes. A `dlsstweaks.log` appearing next to the EXE confirms it loaded. Uninstall = remove wrapper + ini + config tool. The default `dlsstweaks.ini` applies **no tweaks** (ForceDLAA=false, presets=Default) — it's a hook you configure later via `DLSSTweaksConfig.exe` (presets L/M for DLSS 4.5).
 

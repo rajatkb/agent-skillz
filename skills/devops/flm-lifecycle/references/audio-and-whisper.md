@@ -12,7 +12,7 @@ Everything else in the FLM catalog (qwen3.5, qwen3, llama3.x, deepseek-r1, gpt-o
 
 ## Evidence gemma4-it:e2b handles audio (verified from disk + HF card)
 
-- Model dir `C:\Users\RAJAT\.flm\models\Gemma4-E2B-IT-NPU2\` contains `audio_weight.q4nx` + `vision_weight.q4nx` alongside `model.q4nx`
+- Model dir `C:\Users\<user>\.flm\models\Gemma4-E2B-IT-NPU2\` contains `audio_weight.q4nx` + `vision_weight.q4nx` alongside `model.q4nx`
 - `config.json` keys: `audio_config`, `audio_token_id`, `boa_token_id`, `eoa_token_id` (begin/end-of-audio), `audio_model_weight`, `vision_config`; `model_type: gemma4_text`, `Gemma4ForConditionalGeneration`
 - HF card `FastFlowLM/Gemma4-E2B-IT-NPU2` (Google Gemma 4, Apache-2.0, pipeline_tag any-to-any): "Processes Text, Image… Video, and Audio (featured natively on the E2B and E4B models)"; E2B/E4B have ~300M audio encoder. Dense table: E2B/E4B supported modalities = Text, Image, Audio; 31B = Text, Image (no audio).
 - Skill catalog already typed it "Any-to-Text — Vision ✅ + Audio".

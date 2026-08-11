@@ -41,7 +41,7 @@ SUMMARIZE_DOCUMENT = {
         "properties": {
             "file_path": {
                 "type": "string",
-                "description": "Absolute path to the file on disk (e.g., '/home/rajat-g14/project/log.txt').",
+                "description": "Absolute path to the file on disk (e.g., '/home/<user>/project/log.txt').",
             },
             "instruction": {
                 "type": "string",
@@ -167,8 +167,8 @@ ANALYZE_IMAGE = {
                 "type": "string",
                 "description": (
                     "Absolute path to the image file on the Windows or WSL filesystem "
-                    "(e.g., '/mnt/c/Users/RAJAT/Downloads/screenshot.png' or "
-                    "'/home/rajat-g14/image.jpg'). Supports PNG, JPG, JPEG, WebP, BMP."
+                    "(e.g., 'C:\\Users\\<user>\\Downloads\\screenshot.png' or "
+                    "'/home/<user>/image.jpg'). Supports PNG, JPG, JPEG, WebP, BMP."
                 ),
             },
             "question": {

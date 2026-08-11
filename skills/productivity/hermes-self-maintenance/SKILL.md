@@ -67,7 +67,7 @@ $notify.Dispose()
 
 The cron prompt's final step calls it:
 ```
-powershell.exe -ExecutionPolicy Bypass -File "C:\Users\RAJAT\.hermes\hermes-notify.ps1" -Title "Hermes Audit" -Message "..." -Duration 8
+powershell.exe -ExecutionPolicy Bypass -File "C:\Users\<user>\.hermes\hermes-notify.ps1" -Title "Hermes Audit" -Message "..." -Duration 8
 ```
 
 Set `deliver: 'local'` on the cron job — the notification is the actual delivery mechanism.

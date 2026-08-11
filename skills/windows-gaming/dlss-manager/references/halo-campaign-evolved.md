@@ -1,6 +1,6 @@
 # Halo: Campaign Evolved — DLSS preset research (Aug 2026)
 
-Researched via research.py crawler + direct fetches. Game root: `/mnt/d/Halo.Campaign.Evolved.Premium.Edition-InsaneRamZes` (UE engine, exe `Meteorite/Binaries/Win64/HaloCampaignEvolved.exe`). Currently at DLSS 310.7.0 (4.5) + DLSSTweaks 0.310.5.0 installed (wrapper `dxgi.dll` next to exe).
+Researched via research.py crawler + direct fetches. Game root: `/mnt/d/<Game>` (UE engine, exe `Meteorite/Binaries/Win64/HaloCampaignEvolved.exe`). Currently at DLSS 310.7.0 (4.5) + DLSSTweaks 0.310.5.0 installed (wrapper `dxgi.dll` next to exe).
 
 ## Preset consensus: DLSS 4.5 **Preset M**
 

@@ -205,7 +205,7 @@ Kills all `flm.exe` processes via `taskkill /IM flm.exe /F`. No-op if none runni
 curl -s http://localhost:50001/v1/models | python3 -c "import sys,json; print(json.dumps([m['id'] for m in json.load(sys.stdin)['data']], indent=2))"
 
 # Check model files on disk from WSL:
-ls /mnt/c/Users/RAJAT/.flm/models/Gemma4-E2B-IT-NPU2/
+ls /mnt/c/Users/<user>/.flm/models/Gemma4-E2B-IT-NPU2/
 
 # Registered model catalog (all models FLM knows about via model_list.json)
 python3 -c "import json; d=json.load(open(r'/mnt/c/Program Files/flm/model_list.json')); [print(f'{fam}:{v}') for fam in d['models'] for v in d['models'][fam]]"
@@ -249,7 +249,7 @@ Remove-Item -Recurse -Force "$env:USERPROFILE\\.flm\\models\\Gemma4-E2B-IT-NPU2"
 & 'C:\\Program Files\\flm\\flm.exe' pull gemma4-it:e2b
 ```
 
-Model storage location: `%USERPROFILE%\\.flm\\models\\<Model-Name>\\` (e.g. `C:\\Users\\RAJAT\\.flm\\models\\Gemma4-E2B-IT-NPU2\\`).
+Model storage location: `%USERPROFILE%\\.flm\\models\\<Model-Name>\\` (e.g. `C:\\Users\\<user>\\.flm\\models\\Gemma4-E2B-IT-NPU2\\`).
 
 ### Switch Model
 

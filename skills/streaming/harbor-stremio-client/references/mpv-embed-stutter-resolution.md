@@ -3,7 +3,7 @@
 Worked case on G14 GA403 (AMD 890M iGPU, 4K OLED, Win11 25H2). Harbor's embedded libmpv stuttered ~1s every 15–100s; HTML5 player smooth; **bundled standalone mpv smooth** → Harbor-integration bug, not engine/system.
 
 ## The fork that ended the guessing
-- `& 'C:\Users\RAJAT\AppData\Local\Harbor\mpv.exe' --no-config '<stream-url>'` → SMOOTH (same mpv build, same 4K stream)
+- `& 'C:\Users\<user>\AppData\Local\Harbor\mpv.exe' --no-config '<stream-url>'` → SMOOTH (same mpv build, same 4K stream)
 - Harbor mpv (embedded) → stutters; HTML5 player → smooth
 - Conclusion: run this fork EARLY when a stutter survives config changes — it splits "Harbor integration" vs "mpv engine + system" in 2 minutes and stops theory-cycling.
 
@@ -37,7 +37,7 @@ Harbor's Continue-Watching snapshot feature grabs a 4K frame during playback **e
 Screenshots fire every 6–12s → ANY event is within ~8s of a screenshot by density alone ("25/27 jumps near a screenshot" is meaningless as-is). Proof requires either: tight deltas (<1s) at the drop moment, or disabling the feature (retention=0) and comparing cadence. Same trap applies to any periodic background work (pollers, timers).
 
 ## Reinstall silently reverts both fixes (bite-2x in one session)
-After reinstalling beta 0.9.118, settings.json reset to defaults and BOTH fixes vanished: `cwSnapshotRetentionDays` 0→7, `mpvExtraOptions` → "" (cache-on-disk=no gone). Freezes returned while the user believed the fix was still in place — the "still happening" report was stale config, not a failed fix. Ground truth before re-debugging: `grep -oE '"(cwSnapshotRetentionDays|mpvExtraOptions)"[^,}]*' C:\Users\RAJAT\AppData\Roaming\app.harbor\settings.json` → re-apply both, then test. A clean session WITH both fixes = 0 PTS jumps / 0 underruns / 0 cache failures over 7 min.
+After reinstalling beta 0.9.118, settings.json reset to defaults and BOTH fixes vanished: `cwSnapshotRetentionDays` 0→7, `mpvExtraOptions` → "" (cache-on-disk=no gone). Freezes returned while the user believed the fix was still in place — the "still happening" report was stale config, not a failed fix. Ground truth before re-debugging: `grep -oE '"(cwSnapshotRetentionDays|mpvExtraOptions)"[^,}]*' C:\Users\<user>\AppData\Roaming\app.harbor\settings.json` → re-apply both, then test. A clean session WITH both fixes = 0 PTS jumps / 0 underruns / 0 cache failures over 7 min.
 
 ## Bug report filed upstream (Aug 2026)
 Title: "[Bug]: Embedded mpv stutters with periodic ~1s freezes on Windows — standalone mpv.exe is smooth, HTML5 player is smooth". Affected area: Playback/player/mpv.

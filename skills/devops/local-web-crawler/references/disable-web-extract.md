@@ -12,7 +12,7 @@ Patch `toolsets.py` to remove `"web_extract"` from both `_HERMES_CORE_TOOLS` and
 # disable-web-extract.py
 import sys
 
-path = "/home/rajat-g14/.asdf/installs/python/3.11.0/lib/python3.11/site-packages/toolsets.py"
+path = "/home/<user>/.asdf/installs/python/3.11.0/lib/python3.11/site-packages/toolsets.py"
 
 try:
     with open(path) as f:

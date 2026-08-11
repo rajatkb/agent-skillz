@@ -2,7 +2,7 @@
 
 ## Config File
 
-`C:\Users\RAJAT\.wslconfig`:
+`C:\Users\<user>\.wslconfig`:
 
 ```ini
 [wsl2]
@@ -52,7 +52,7 @@ If `localhost` stops reaching Windows from WSL:
 
 ```bash
 # Check if mirrored mode is still configured
-cat /mnt/c/Users/RAJAT/.wslconfig | grep networkingMode
+cat /mnt/c/Users/<user>/.wslconfig | grep networkingMode
 
 # Check WSL version (must be WSL2 with mirrored support)
 wsl.exe --version

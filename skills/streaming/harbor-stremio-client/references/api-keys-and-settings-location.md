@@ -4,8 +4,8 @@ Where Harbor keeps the user's streaming/debrid/API keys on this machine.
 
 ## Location
 
-`C:\Users\RAJAT\AppData\Roaming\app.harbor\settings.json`
-(WSL: `/mnt/c/Users/RAJAT/AppData/Roaming/app.harbor/settings.json`)
+`C:\Users\<user>\AppData\Roaming\app.harbor\settings.json`
+(WSL: `/mnt/c/Users/<user>/AppData/Roaming/app.harbor/settings.json`)
 
 Tauri-persisted settings store — flat JSON with dotted-key-style field names
 (`{"tmdbKey": "...", "tbKey": "...", ...}`). This is separate from the frontend
@@ -32,7 +32,7 @@ API-key fields live in this disk file.
 ```bash
 python3 -c "
 import json
-d = json.load(open('/mnt/c/Users/RAJAT/AppData/Roaming/app.harbor/settings.json'))
+d = json.load(open('/mnt/c/Users/<user>/AppData/Roaming/app.harbor/settings.json'))
 [print(f'{k} = {v}') for k, v in d.items() if k.lower().endswith('key') or 'token' in k.lower()]
 "
 ```

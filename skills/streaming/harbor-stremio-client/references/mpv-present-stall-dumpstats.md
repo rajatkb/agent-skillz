@@ -10,7 +10,7 @@ User reports picture freezes with audio continuing (present stall) and the mpv l
 measure the present path directly.
 
 ## Setup
-Settings → MPV → Advanced → `--dump-stats=C:\Users\RAJAT\AppData\Local\Temp\mpvstats.txt`
+Settings → MPV → Advanced → `--dump-stats=C:\Users\<user>\AppData\Local\Temp\mpvstats.txt`
 (runtime-settable; applied via Harbor's extra-options layer; no restart of the app needed, player restart applies it).
 The file fills with per-frame events at ns timestamps on mpv's clock (divide by 1e9 = mpv-seconds,
 same clock as the log's `[  12.345]` stamps → direct overlay with screenshot/grab times).

@@ -4,9 +4,14 @@ Usage: python3 analyze_flips.py <mpvstats.txt>
 Healthy: median ~400us, max <10ms. Stalls: flips >100ms = present blocks = freezes.
 """
 import bisect
+import os
 import sys
 
-path = sys.argv[1] if len(sys.argv) > 1 else '/mnt/c/Users/RAJAT/AppData/Local/Temp/mpvstats.txt'
+path = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
+    "/mnt/c",
+    os.environ.get("USERPROFILE", r"\Users\Public")[2:].replace("\\", "/"),
+    "AppData/Local/Temp/mpvstats.txt",
+)
 starts, ends = [], []
 for ln in open(path, encoding='utf-8', errors='replace'):
     p = ln.split()

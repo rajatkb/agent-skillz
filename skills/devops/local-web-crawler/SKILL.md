@@ -57,7 +57,7 @@ The browser-UA curl got 200s from all three sites that 403'd the tool. Note `web
 # and from the "web" toolset definition
 python3 -c "
 import re
-path = '/home/rajat-g14/.asdf/installs/python/3.11.0/lib/python3.11/site-packages/toolsets.py'
+path = '/home/<user>/.asdf/installs/python/3.11.0/lib/python3.11/site-packages/toolsets.py'
 
 with open(path) as f:
     content = f.read()

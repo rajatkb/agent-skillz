@@ -6,7 +6,7 @@
 # Usage: bash live-mpv-log-capture.sh [LOG] [OUT]   (defaults below)
 # Companion sampler (optional, for process-level stall correlation):
 #   while true; do powershell.exe -NoProfile -Command '$p=Get-Process -Name harbor -EA SilentlyContinue; if($p){"{0} cpu_s={1} ram_mb={2}" -f (Get-Date -Format HH:mm:ss),[math]::Round($p.CPU),[math]::Round($p.WorkingSet64/1MB)}'; sleep 2; done > /tmp/harbor_cpu.log
-LOG=${1:-/mnt/c/Users/RAJAT/AppData/Roaming/app.harbor/harbor-mpv.log}
+LOG=${1:-/mnt/c/Users/<user>/AppData/Roaming/app.harbor/harbor-mpv.log}
 OUT=${2:-/tmp/harbor_live_capture.log}
 : > "$OUT"
 last_size=0

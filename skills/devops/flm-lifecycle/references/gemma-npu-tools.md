@@ -75,7 +75,7 @@ Read a file from disk and have Gemma4 analyze it.
 **Example:**
 ```
 summarize_document(
-  file_path="/home/rajat-g14/project/debug.log",
+  file_path="/home/<user>/project/debug.log",
   instruction="List all error messages with their timestamps"
 )
 ```

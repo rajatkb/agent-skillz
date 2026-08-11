@@ -16,7 +16,7 @@ Culprit was RivaTuner Statistics Server hooking D3D11 Present; the CW-snapshot
 grab loop and d3d11-flip=no were both exonerated by counting events (see
 harbor-stremio-client SKILL.md, ACTUAL ROOT CAUSE section).
 
-To capture: add  --dump-stats=C:\Users\RAJAT\AppData\Local\Temp\mpvstats.txt
+To capture: add  --dump-stats=C:\Users\<user>\AppData\Local\Temp\mpvstats.txt
 to Settings -> MPV -> Advanced (runtime-settable, applies mid-session).
 """
 import bisect

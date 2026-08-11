@@ -164,8 +164,9 @@ try {
 } catch { Write-Output "0.0.0.0" }
 """
 
-_WIN_PS1_PATH = r"C:\Users\RAJAT\AppData\Local\Temp\dlss_getver.ps1"
-_WSL_PS1_PATH = "/mnt/c/Users/RAJAT/AppData/Local/Temp/dlss_getver.ps1"
+_USERPROFILE = os.environ.get("USERPROFILE", r"C:\Users\Public")  # Windows env var, inherited into WSL
+_WIN_PS1_PATH = _USERPROFILE + r"\AppData\Local\Temp\dlss_getver.ps1"
+_WSL_PS1_PATH = "/mnt/c" + _USERPROFILE[2:].replace("\\", "/") + "/AppData/Local/Temp/dlss_getver.ps1"
 
 
 def read_dll_version(dll_path: str) -> str:

@@ -60,10 +60,10 @@ SCRIPT
 powershell.exe -File /tmp/check.ps1          # FAILS
 
 # RIGHT — write to /mnt/c/ (Windows native path)
-cat > /mnt/c/Users/RAJAT/check.ps1 << 'SCRIPT'
+cat > /mnt/c/Users/<user>/check.ps1 << 'SCRIPT'
 ... script content ...
 SCRIPT
-powershell.exe -ExecutionPolicy Bypass -File "C:\Users\RAJAT\check.ps1"  # WORKS
+powershell.exe -ExecutionPolicy Bypass -File "C:\Users\<user>\check.ps1"  # WORKS
 ```
 
 **Alternative:** For simple multi-line scripts, pass the entire command as a single-quoted string with `-Command` (not `-File`), but remember to escape `$` and backticks from bash interpolation.

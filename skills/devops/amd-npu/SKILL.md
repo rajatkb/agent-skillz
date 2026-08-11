@@ -225,7 +225,7 @@ Write a .ps1 to a Windows path first to avoid PowerShell execution policy blocki
 
 ```bash
 # Write script to Windows path
-cat > /mnt/c/Users/RAJAT/check_models.ps1 << 'SCRIPT'
+cat > /mnt/c/Users/<user>/check_models.ps1 << 'SCRIPT'
 $paths = @(
     "$env:USERPROFILE\.flm\models"
 )
@@ -241,7 +241,7 @@ foreach ($p in $paths) {
 SCRIPT
 
 # Execute with Bypass policy
-powershell.exe -ExecutionPolicy Bypass -File "C:\Users\RAJAT\check_models.ps1"
+powershell.exe -ExecutionPolicy Bypass -File "C:\Users\<user>\check_models.ps1"
 ```
 
 **Why not `-File /tmp/check_models.ps1`?** PowerShell's `-File` parameter rejects UNC paths (`\\wsl.localhost\...`). WSL paths under `/tmp/` resolve to UNC from Windows. Write scripts to `/mnt/c/Users/<user>/` instead.
@@ -268,7 +268,7 @@ Ports in the 3000-9000 range or 50001+ outside excluded ranges work reliably.
 
 ### WSL Mirrored Networking — `localhost` Works (No Gateway IP Tricks)
 
-This system has `.wslconfig` set to `networkingMode=mirrored` at `C:\Users\RAJAT\.wslconfig`:
+This system has `.wslconfig` set to `networkingMode=mirrored` at `C:\Users\<user>\.wslconfig`:
 
 ```ini
 [wsl2]
@@ -288,7 +288,7 @@ curl -s --max-time 5 http://localhost:50001/v1/models | python3 -c \
 
 **Config location to check or modify mirrored mode:**
 ```bash
-cat /mnt/c/Users/RAJAT/.wslconfig
+cat /mnt/c/Users/<user>/.wslconfig
 # Changes require `wsl --shutdown` and `wsl` restart to take effect
 ```
 
@@ -387,15 +387,15 @@ Store models on the Windows drive for access from both Windows and WSL:
 
 ```bash
 # From WSL
-export FLM_MODEL_PATH=/mnt/c/Users/RAJAT/flm/models
+export FLM_MODEL_PATH=/mnt/c/Users/<user>/flm/models
 flm.exe serve llama3.2:1b
 
 # Make permanent
-echo 'export FLM_MODEL_PATH=/mnt/c/Users/RAJAT/flm/models' >> ~/.bashrc
+echo 'export FLM_MODEL_PATH=/mnt/c/Users/<user>/flm/models' >> ~/.bashrc
 # or ~/.zshrc
 
 # From Windows PowerShell
-$env:FLM_MODEL_PATH = "C:\\Users\\RAJAT\\flm\\models"
+$env:FLM_MODEL_PATH = "C:\\Users\\<user>\\flm\\models"
 flm serve llama3.2:1b
 ```
 

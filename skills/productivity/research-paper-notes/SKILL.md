@@ -1,6 +1,6 @@
 ---
 name: research-paper-notes
-description: Study, summarize, and take notes on research papers (arXiv links or PDFs) and file them into the Obsidian vault at /mnt/c/Users/RAJAT/vault/. Use when the user shares a paper and wants it understood, summarized, or noted. Covers PDF text extraction that never touches the Hermes runtime Python.
+description: Study, summarize, and take notes on research papers (arXiv links or PDFs) and file them into the Obsidian vault at /mnt/c/Users/<user>/vault/. Use when the user shares a paper and wants it understood, summarized, or noted. Covers PDF text extraction that never touches the Hermes runtime Python.
 ---
 
 # Research Paper Notes → Obsidian Vault
@@ -9,7 +9,7 @@ description: Study, summarize, and take notes on research papers (arXiv links or
 User drops an arXiv link or PDF and says "study / summarize / understand / take notes". Deliverable: a real markdown note in the vault (top-level unless the user says otherwise) containing a genuine summary + study notes, not a stub.
 
 ## Vault facts
-- Vault: `$VAULT_WIN_PATH` = `/mnt/c/Users/RAJAT/vault/` (NTFS mount, Windows side)
+- Vault: `$VAULT_WIN_PATH` = `/mnt/c/Users/<user>/vault/` (NTFS mount, Windows side)
 - Existing top-level structure: `conference/`, `jepa_notes/`, `model_tricks/`, `video_diffusion_alignment/` + loose top-level `.md` notes
 - Vault sync is push-only (Repo → Windows), user runs `npm run watch`
 - Ask about placement only when ambiguous. "Top-level" = vault root, no folder.
@@ -28,8 +28,8 @@ User drops an arXiv link or PDF and says "study / summarize / understand / take 
    EOF
    ```
 4. **Read + understand**: read `paper.txt` in chunks (read_file, ~500 lines), pull out key equations, architecture in prose, and the *why* behind each technique. Track with todo.
-5. **Write the note** (top-level `.md`): title + metadata (authors, arXiv ID + URL, date), then Summary, Key Concepts, Equations, section walkthrough, "Connections" to the user's other work (JEPA/VAE/diffusion — the vault topics), open questions. **Write in the USER's own voice, not formal prose** (punchy one-liners, bold lead-ins, `**Math (Name):**` + display equation + italic plain-language takeaway, ⚠ trap callouts, comparison tables, blockquote "never-forget" memory hooks, toy numeric examples for anything the user struggled with) — full style guide in the paper-study-notes skill; the user explicitly demanded "write into a stylistic method like I do". Author into the REPO copy `~/Work/rajatkb.github.io/data/vault/` (source of truth), not directly into the Windows vault.
-6. **Sync**: `export VAULT_WIN_PATH=/mnt/c/Users/RAJAT/vault/ && bash ~/Work/rajatkb.github.io/scripts/sync-vault.sh` (no args = one-shot Repo → Windows push; `npm run watch` = watcher). Full flow in the paper-study-notes skill.
+5. **Write the note** (top-level `.md`): title + metadata (authors, arXiv ID + URL, date), then Summary, Key Concepts, Equations, section walkthrough, "Connections" to the user's other work (JEPA/VAE/diffusion — the vault topics), open questions. **Write in the USER's own voice, not formal prose** (punchy one-liners, bold lead-ins, `**Math (Name):**` + display equation + italic plain-language takeaway, ⚠ trap callouts, comparison tables, blockquote "never-forget" memory hooks, toy numeric examples for anything the user struggled with) — full style guide in the paper-study-notes skill; the user explicitly demanded "write into a stylistic method like I do". Author into the REPO copy `~/Work/<username>.github.io/data/vault/` (source of truth), not directly into the Windows vault.
+6. **Sync**: `export VAULT_WIN_PATH=/mnt/c/Users/<user>/vault/ && bash ~/Work/<username>.github.io/scripts/sync-vault.sh` (no args = one-shot Repo → Windows push; `npm run watch` = watcher). Full flow in the paper-study-notes skill.
 7. **Verify**: re-read the written file; confirm it sits at vault root and the sync reported "All detected files synced OK".
 
 ## Pitfalls
@@ -39,6 +39,6 @@ User drops an arXiv link or PDF and says "study / summarize / understand / take 
 - `pdftotext` / poppler-utils is NOT installed on this WSL box and `apt-get install` fails without sudo — go straight to pypdf-in-venv, don't burn a cycle on apt.
 - `file` binary is missing — verify the downloaded PDF by byte size / python check, not `file`.
 - arXiv abs/pdf are plain endpoints — curl beats the browser stack. (web_extract/DDGS is broken on this system — see memory.)
-- **Sync direction trap**: vault sync is Repo → Windows with `rsync --delete`. If you author the note only in `/mnt/c/Users/RAJAT/vault/` and then sync, the note is deleted as "not in source". Repo copy (`data/vault/`) is canonical; write there first, then one-shot `bash scripts/sync-vault.sh`.
+- **Sync direction trap**: vault sync is Repo → Windows with `rsync --delete`. If you author the note only in `/mnt/c/Users/<user>/vault/` and then sync, the note is deleted as "not in source". Repo copy (`data/vault/`) is canonical; write there first, then one-shot `bash scripts/sync-vault.sh`.
 - NTFS BOM quirk applies to YAML/JSON only; plain `.md` notes are safe.
 - User wants sources cited for technical claims — reference arXiv IDs and note page/section numbers in the study notes.

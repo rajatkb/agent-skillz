@@ -542,7 +542,7 @@ Vault notes have `contentType: 'mdx'` in contentlayer.config.ts — even `.md` f
 
 **How to detect:** The dev server will hang silently during Contentlayer generation with no error output. Run a targeted MDX compile to diagnose:
 ```bash
-cd /mnt/e/rajatkb.github.io
+cd /mnt/e/<username>.github.io
 node --input-type=module -e "
 import { compile } from '@mdx-js/mdx';
 import { readFileSync } from 'fs';
@@ -950,7 +950,7 @@ Comments use [Giscus](https://giscus.app) — a widget that stores comments as G
 2. Install the Giscus GitHub App at https://github.com/apps/giscus
 3. Visit https://giscus.app, enter the repo, and copy the generated config values
 4. Set these environment variables:
-   - `NEXT_PUBLIC_GISCUS_REPO` — `owner/repo` (e.g. `rajatkb/rajatkb.github.io`)
+   - `NEXT_PUBLIC_GISCUS_REPO` — `owner/repo` (e.g. `<username>/<username>.github.io`)
    - `NEXT_PUBLIC_GISCUS_REPOSITORY_ID` — from giscus.app
    - `NEXT_PUBLIC_GISCUS_CATEGORY` — Discussion category name
    - `NEXT_PUBLIC_GISCUS_CATEGORY_ID` — from giscus.app

@@ -2,7 +2,6 @@
   <img src="https://img.shields.io/badge/Hermes%20Agent-harness-7c3aed?style=for-the-badge&logo=python&logoColor=white" alt="Hermes Agent harness"/>
   <img src="https://img.shields.io/badge/plugins-4-22c55e?style=for-the-badge" alt="4 plugins"/>
   <img src="https://img.shields.io/badge/skills-15-0ea5e9?style=for-the-badge" alt="15 skills"/>
-  <img src="https://img.shields.io/badge/scripts-4-f59e0b?style=for-the-badge" alt="4 scripts"/>
   <img src="https://img.shields.io/badge/license-GPLv3-ef4444?style=for-the-badge" alt="GPLv3"/>
 </p>
 
@@ -10,14 +9,13 @@
 
 <p align="center">
   <b>A production-grade <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> harness</b><br/>
-  Plugins · Skills · Scripts — battle-tested daily on a Windows 11 + WSL2 + AMD Ryzen AI NPU machine,
+  Plugins · Skills — battle-tested daily on a Windows 11 + WSL2 + AMD Ryzen AI NPU machine,
   curated for reuse beyond one setup.
 </p>
 
 <p align="center">
   <a href="#-plugins">Plugins</a> ·
   <a href="#-skills">Skills</a> ·
-  <a href="#-scripts">Scripts</a> ·
   <a href="#-getting-started">Getting started</a> ·
   <a href="#-maintaining-this-repo">Maintaining</a> ·
   <a href="#-license">License</a>
@@ -29,7 +27,6 @@ A living collection of everything that makes my agent setup actually *mine*:
 
 - **🧩 Plugins** — runtime hooks and tools that extend the agent itself (token budgeting, on-demand NPU inference, full session logging).
 - **📚 Skills** — the accumulated procedural knowledge of how to run, fix, and tune this specific machine: Windows internals, GPU gaming, NPU acceleration, ML workflows.
-- **🛠 Scripts** — standalone utilities the agent (or you) can call directly.
 
 Everything here was built to solve a real problem, documented so it stays maintainable, and checked in so nothing gets lost between reinstalls. **The rule of this repo: if a harness or tool works, it lives here.**
 
@@ -115,17 +112,6 @@ Procedural knowledge, organized the same way Hermes organizes it — one directo
 ### 🗄 Archive
 
 Retired playbooks kept for reference: [`skills/.archive/`](skills/.archive/) — `glazewm-configuration-troubleshooting`, `hermes-acp-editor`.
-
-## 🛠 Scripts
-
-Standalone utilities. WSL scripts live in [`scripts/`](scripts/), Windows PowerShell ones in [`scripts/windows/`](scripts/windows/).
-
-| Script | What it does |
-|---|---|
-| [research.py](scripts/research.py) | NPU-assisted multi-source research → `crawl_sessions/<slug>/` (summary, synthesis, stats) |
-| [dlss_manager.py](scripts/dlss_manager.py) | DLSS DLL update manager (super resolution, frame gen, ray reconstruction) |
-| [cdp-bridge.py](scripts/cdp-bridge.py) | Chrome DevTools Protocol bridge for browser automation |
-| [windows/hermes-notify.ps1](scripts/windows/hermes-notify.ps1) | Windows toast notification bridge for Hermes |
 
 ## 🚀 Getting started
 

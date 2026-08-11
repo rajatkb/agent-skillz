@@ -156,6 +156,7 @@ This repo exists so every harness we build survives reinstalls and forgetfulness
 3. **Skills stay faithful** — `SKILL.md` plus any `references/` and `scripts/` the skill depends on.
 4. **Runtime state never ships** — `data.json`, `sessions.json`, logs, and `__pycache__` are gitignored. If a harness writes state, keep the state file out of the repo.
 5. **Retired playbooks** go to `skills/.archive/`; one-off incident case studies are removed entirely.
+6. **No personal data** — usernames, home dirs, vault paths, and real game/folder paths become `<user>` / `<username>` / `<Game>` placeholders before committing. Local copies may keep real paths (they need them to run); the repo stays portable.
 
 ## 📁 Repository structure
 

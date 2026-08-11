@@ -84,5 +84,5 @@ chub feedback <id> down
 
 ## Related
 
-- `planning-mode` skill — for using create_plan with API doc context
+- Use `create_plan` with API doc context for decomposing doc-heavy tasks
 - `references/tested-apis.md` — coverage map of what queries return results vs miss on this system

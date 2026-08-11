@@ -164,6 +164,6 @@ python3 ~/.hermes/scripts/dlss_manager.py /mnt/d/SomeGame tweak-config --profile
 
 ## Related
 
-- Full game-DLSS inventory scans: run `status` per game, or a manual `find` for `nvngx_dlss*.dll` + PowerShell `VersionInfo.FileVersion` across drives (see windows-software-management skill for the PS1-from-WSL pattern).
+- Full game-DLSS inventory scans: run `status` per game, or a manual `find` for `nvngx_dlss*.dll` + PowerShell `VersionInfo.FileVersion` across drives (PS1-from-WSL: invoke via `powershell.exe -NoProfile -Command`).
 - DLSS 4K quality-mode/preset guidance + default profile: `references/dlss-4k-settings-research.md`.
 - Per-game researched findings (Halo Campaign Evolved — M-preset consensus, 6x MFG notes): `references/halo-campaign-evolved.md`.

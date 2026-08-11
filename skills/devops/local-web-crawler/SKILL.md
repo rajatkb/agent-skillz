@@ -93,7 +93,7 @@ python -m playwright install chromium   # one-time browser download
 
 Already installed on this system. Playwright chromium is cached.
 
-**Where crawl4ai lives (important for venv hygiene):** crawl4ai + playwright are installed in the **Hermes runtime** (`~/.asdf/installs/python/3.11.0/lib/python3.11/site-packages`), NOT in any venv — research.py's `#!/usr/bin/env python3` shebang resolves to the asdf runtime interpreter. Do NOT pip-install crawl4ai into the agent venv; if the runtime ever needs it reinstalled, use `env -u PYTHONPATH <venv>/bin/pip install crawl4ai` and verify `python -m playwright install chromium`. Note: the Hermes TUI exports PYTHONPATH pointing at the runtime site-packages, so venv pythons can `import crawl4ai` from the runtime even though it isn't installed in them (see python-venv-hygiene skill).
+**Where crawl4ai lives (important for venv hygiene):** crawl4ai + playwright are installed in the **Hermes runtime** (`~/.asdf/installs/python/3.11.0/lib/python3.11/site-packages`), NOT in any venv — research.py's `#!/usr/bin/env python3` shebang resolves to the asdf runtime interpreter. Do NOT pip-install crawl4ai into the agent venv; if the runtime ever needs it reinstalled, use `env -u PYTHONPATH <venv>/bin/pip install crawl4ai` and verify `python -m playwright install chromium`. Note: the Hermes TUI exports PYTHONPATH pointing at the runtime site-packages, so venv pythons can `import crawl4ai` from the runtime even though it isn't installed in them.
 
 ## Usage
 

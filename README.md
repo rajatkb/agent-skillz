@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Hermes%20Agent-harness-7c3aed?style=for-the-badge&logo=python&logoColor=white" alt="Hermes Agent harness"/>
   <img src="https://img.shields.io/badge/plugins-4-22c55e?style=for-the-badge" alt="4 plugins"/>
-  <img src="https://img.shields.io/badge/skills-33-0ea5e9?style=for-the-badge" alt="33 skills"/>
+  <img src="https://img.shields.io/badge/skills-26-0ea5e9?style=for-the-badge" alt="26 skills"/>
   <img src="https://img.shields.io/badge/scripts-10-f59e0b?style=for-the-badge" alt="10 scripts"/>
   <img src="https://img.shields.io/badge/license-GPLv3-ef4444?style=for-the-badge" alt="GPLv3"/>
 </p>
@@ -41,7 +41,7 @@ Everything here was built to solve a real problem, documented so it stays mainta
 | 🔋 **NPU on demand** | `flm-lifecycle` boots the local inference server only when an NPU tool is called and kills it when the last session ends — zero idle waste |
 | 📊 **Every dollar tracked** | `budget-tracker` estimates cost with Hermes' pricing engine (cache-aware), pulls the real DeepSeek balance, and enforces a budget ceiling |
 | 🕵️ **Total session recall** | `chat-logger` records every API call, tool invocation, and response as compressed JSON-lines, queryable via CLI |
-| 🧠 **31 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to Harbor present-stalls — every fix is a documented playbook, not a memory |
+| 🧠 **24 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to Harbor present-stalls — every fix is a documented playbook, not a memory |
 | 🔒 **Privacy by construction** | No logs, session data, or runtime state is ever committed; the `.gitignore` enforces it |
 
 ## 📦 Plugins
@@ -75,7 +75,7 @@ These four compose into a coherent system:
 
 Procedural knowledge, organized the same way Hermes organizes it — one directory per skill, each with a `SKILL.md` (and references/scripts where the problem demanded them).
 
-### devops · 12
+### devops · 9
 
 | Skill | What it's for |
 |---|---|
@@ -88,11 +88,8 @@ Procedural knowledge, organized the same way Hermes organizes it — one directo
 | [hermes-voice-mode](skills/devops/hermes-voice-mode/) | Set up and troubleshoot Hermes voice mode |
 | [local-web-crawler](skills/devops/local-web-crawler/) | Local web crawling with crawl4ai — no API keys |
 | [playnite-theme-development](skills/devops/playnite-theme-development/) | Playnite fullscreen theme modding (.pth) |
-| [python-venv-hygiene](skills/devops/python-venv-hygiene/) | Python environment topology — which interpreter, when |
-| [third-party-app-diagnostics](skills/devops/third-party-app-diagnostics/) | Diagnose third-party app memory/resource behavior |
-| [windows-software-management](skills/devops/windows-software-management/) | Install/manage Windows software from WSL |
-### windows · 4
 
+### windows · 4
 | Skill | What it's for |
 |---|---|
 | [asus-rog-power-thermal](skills/windows/asus-rog-power-thermal/) | Power/thermal diagnosis on ASUS ROG laptops |
@@ -109,15 +106,6 @@ Procedural knowledge, organized the same way Hermes organizes it — one directo
 | [playnite-plugin-discovery](skills/windows-gaming/playnite-plugin-discovery/) | Discover/evaluate/install Playnite plugins |
 | [rtss-overlay-configuration](skills/windows-gaming/rtss-overlay-configuration/) | RTSS / MSI Afterburner overlay config |
 | [rutor-game-search](skills/windows-gaming/rutor-game-search/) | rutor.info search → magnet → qBittorrent |
-
-### ml-agents · 4
-
-| Skill | What it's for |
-|---|---|
-| [arc-agi-3](skills/ml-agents/arc-agi-3/) | ARC-AGI-3 agent development (game state, FMs) |
-| [cloud-gpu-cost-analysis](skills/ml-agents/cloud-gpu-cost-analysis/) | Compare cloud GPU pricing across providers |
-| [cloud-gpu-provisioning](skills/ml-agents/cloud-gpu-provisioning/) | Research and provision cloud GPU instances |
-| [planning-mode](skills/ml-agents/planning-mode/) | Decompose complex goals with `create_plan` |
 
 ### productivity · 3
 
@@ -165,7 +153,7 @@ cp -r plugins/* ~/.hermes/plugins/
 
 # Skills → Hermes skills dir (loaded automatically by name)
 cp -r skills/devops skills/windows skills/windows-gaming \
-      skills/ml-agents skills/productivity skills/streaming \
+      skills/productivity skills/streaming \
       skills/web-dev \
       skills/windows-computer-use ~/.hermes/skills/
 
@@ -211,7 +199,7 @@ agent-skillz/
 │   ├── flm-lifecycle/      NPU server lifecycle
 │   └── gemma-npu/          NPU-accelerated tools
 ├── skills/                 procedural knowledge
-│   ├── devops/  windows/  windows-gaming/  ml-agents/
+│   ├── devops/  windows/  windows-gaming/
 │   ├── productivity/  streaming/  web-dev/
 │   ├── windows-computer-use/
 │   └── .archive/           retired playbooks

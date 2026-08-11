@@ -25,7 +25,7 @@ category: devops
 
 - Docs say `cd ~/.hermes/hermes-agent && uv pip install -e ".[voice]"` — that path is only valid for uv checkouts. **PITFALL: this machine installs Hermes via pip on asdf py3.11** (`pip show hermes-agent` → `~/.asdf/installs/python/3.11.0/lib/python3.11/site-packages`), no `~/.hermes/hermes-agent` dir. Equivalent here: `pip install sounddevice faster-whisper` (numpy already present).
 - System deps (Linux): PortAudio + ffmpeg. Ubuntu: `sudo apt install portaudio19-dev ffmpeg`; Debian: `libportaudio2`. This box is **Debian 13 trixie**. sounddevice fails without the PortAudio lib.
-- Exception to python-venv-hygiene: hermes ITSELF lives in the asdf py3.11 env, so voice extras go into that same env.
+- Exception to the throwaway-venv rule: hermes ITSELF lives in the asdf py3.11 env, so voice extras go into that same env.
 
 ## WSL audio — the mic problem
 

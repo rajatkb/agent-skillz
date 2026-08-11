@@ -33,7 +33,7 @@ Workflow for turning an arXiv paper link into a top-level note in the user's vau
    EOF
    ```
 
-3. **Extract text with pypdf** — pdftotext/poppler is NOT installed on this WSL; use a throwaway /tmp venv (no persistent venvs exist on this machine — the old `~/pyenv/agent` was deleted Aug 2026; see python-venv-hygiene):
+3. **Extract text with pypdf** — pdftotext/poppler is NOT installed on this WSL; use a throwaway /tmp venv (no persistent venvs exist on this machine — the old `~/pyenv/agent` was deleted Aug 2026):
    ```bash
    python3 -m venv /tmp/pdfenv && env -u PYTHONPATH /tmp/pdfenv/bin/pip install -q pypdf
    env -u PYTHONPATH /tmp/pdfenv/bin/python -c "
@@ -82,5 +82,5 @@ Workflow for turning an arXiv paper link into a top-level note in the user's vau
 - **web_extract is broken** (DDGS backend) — never use it for the abs page; curl + regex meta tags is fast and reliable.
 - **NEVER write the note only into the Windows vault** (`/mnt/c/Users/RAJAT/vault/`) and then run the sync — the script's `rsync --delete` pushes Repo → Windows, so a Windows-only file is treated as "not in source" and DELETED. Always author into the repo copy (`data/vault/`) first, then push.
 - If the user interrupts mid-task with "wait, what are you doing?" — STOP and explain the plan/status before continuing. They want transparency on toolchain changes (installs, venvs) as well as task progress.
-- Never pip-install extraction libs into the Hermes runtime (asdf py3.11) — use a throwaway /tmp venv with `env -u PYTHONPATH` (see python-venv-hygiene skill).
+- Never pip-install extraction libs into the Hermes runtime (asdf py3.11) — use a throwaway /tmp venv with `env -u PYTHONPATH`.
 - If the PDF's extract_text returns empty/garbled (scanned or image-based PDF), the paper needs OCR — tell the user rather than fabricating content.

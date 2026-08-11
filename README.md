@@ -165,7 +165,6 @@ Standalone utilities. WSL scripts live in [`scripts/`](scripts/), Windows PowerS
 | [rutor-search.py](scripts/rutor-search.py) / [.sh](scripts/rutor-search.sh) | rutor.info torrent search → magnet link |
 | [flight-search.py](scripts/flight-search.py) | Flight search automation (paired with the windows-computer-use skill) |
 | [cdp-bridge.py](scripts/cdp-bridge.py) | Chrome DevTools Protocol bridge for browser automation |
-| [vision_gemma4.py](scripts/vision_gemma4.py) | Vision helper for local Gemma 4 inference |
 | [windows/rutor-search.ps1](scripts/windows/rutor-search.ps1) | Windows-side rutor search (winappcli-friendly) |
 | [windows/check-focus.ps1](scripts/windows/check-focus.ps1) | Focus Assist / quiet-hours status |
 | [windows/hermes-notify.ps1](scripts/windows/hermes-notify.ps1) | Windows toast notification bridge for Hermes |

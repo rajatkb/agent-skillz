@@ -593,19 +593,7 @@ Gemma 4 (E2B/E4B) on FLM provides fast, local image analysis on the NPU with min
 powershell.exe -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'C:\Program Files\flm\flm.exe' -ArgumentList 'serve gemma4-it:e2b --host 0.0.0.0 --port 50001'"
 ```
 
-**Vision script** at `/home/rajat-g14/.hermes/scripts/vision_gemma4.py` — a Python wrapper that:
-- Reads an image file, base64-encodes it
-- Sends a minimal OpenAI-format request (system + image + question only)
-- Returns the model's analysis
-- Supports `--json` output for programmatic consumption
-- Configurable detail: `--detail 70|140|280|560|1120` (token budget per image)
-
-**Usage:**
-```bash
-python3 ~/.hermes/scripts/vision_gemma4.py --image /path/to/image.jpg
-python3 ~/.hermes/scripts/vision_gemma4.py --image screenshot.png -q "What UI elements are here?" --json
-python3 ~/.hermes/scripts/vision_gemma4.py --image doc.png -q "Extract all text" --detail 560
-```
+**Image analysis:** done via the agent's `analyze_image` tool (gemma-npu plugin) — no standalone script needed. The tool sends ONLY system prompt + image + question to the NPU and returns the model's analysis. Detail levels 70/140/280/560/1120 map to visual token budgets (280 = default balance; 560 for text-heavy images; 70 for quick classification).
 
 **API format (for custom integrations):**
 ```python
@@ -633,7 +621,7 @@ response = client.chat.completions.create(
 - Quantization: Q4_1
 - Default context: 64K, max 128K
 
-The script at `~/.hermes/scripts/vision_gemma4.py` is the working reference for setup and API usage.
+The API format above is the working reference for setup and custom integrations.
 
 ### RAG / Embeddings for NPU
 
@@ -659,7 +647,6 @@ See `flm-lifecycle/references/flm-model-catalog.md` for the current catalog snap
 - `references/wsl-powershell-quirks.md` — escaping `$`, path issues, and UNC path workarounds when calling PowerShell/CMD from WSL bash
 - `references/npu-memory-limits.md` — NPU shared memory investigation, UMA limits, BIOS/Windows settings, WSL2 vs NPU memory confusion, G14 system details
 - `references/embedding-models.md` — MTEB benchmark, embed-gemma:300m usage, comparison of CPU vs NPU embedding models for RAG
-- `scripts/vision_gemma4.py` — located at `~/.hermes/scripts/vision_gemma4.py` (NOT in the skill dir; user-level utility script)
 - `references/wsl-mirrored-networking.md` — WSL `networkingMode=mirrored` setup, diagnosis, and FLM_HOST implications for `localhost` access to Windows services
 - FastFlowLM docs: https://fastflowlm.com/docs/
 - FastFlowLM repo: https://github.com/FastFlowLM/FastFlowLM

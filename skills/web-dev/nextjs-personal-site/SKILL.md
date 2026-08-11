@@ -36,7 +36,7 @@ poweredByHeader: false,
 - **Use Turbopack over webpack.** Turbopack compiles ~2× faster and uses significantly less heap (40-50% less memory in dev). Remove `--webpack` from scripts and any dead webpack-only loaders (e.g., `@svgr/webpack` if no `.svg` component imports exist). See the Turbopack migration section below for the full checklist.
 - **Purge stale `.next/` cache.** The `.next/` directory accumulates build artifacts (often 800MB+). `rm -rf .next` before a build reclaims disk and reduces cache traversal overhead.
 - **Clear `.contentlayer/generated/`** when changing many vault notes or switching branches. The generated JSON blobs can exceed 100MB and Contentlayer re-reads them on every build.
-- **WSL memory cap.** If WSL crashes (OOM kill), check `.wslconfig` — the root cause was `memory=2GB` + `swap=0` (hard cap, no overflow). Working config (Aug 2026): `memory=4GB`, `processors=2`, `swap=4GB`, with `[experimental] autoMemoryReclaim=gradual` (was already set — the cap was the only blocker). `memory=` is a ceiling, not a reservation — idle WSL sits ~1GB regardless of cap. Full picture (sparse VHDX, `vmIdleTimeout` trap, vhdx-location/verification commands): see the `wsl-resource-tuning` skill.
+- **WSL memory cap.** If WSL crashes (OOM kill), check `.wslconfig` — the root cause was `memory=2GB` + `swap=0` (hard cap, no overflow). Working config (Aug 2026): `memory=4GB`, `processors=2`, `swap=4GB`, with `[experimental] autoMemoryReclaim=gradual` (was already set — the cap was the only blocker). `memory=` is a ceiling, not a reservation — idle WSL sits ~1GB regardless of cap.
 
 **Verifying memory improvement:** After making changes, measure impact with `free -h` before and after the build:
 ```bash

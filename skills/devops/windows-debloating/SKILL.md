@@ -128,7 +128,7 @@ When an NPU or internal knowledge gives a borderline classification, verify with
 | Tool | Focus | Services touched | Verdict |
 |---|---|---|---|
 | **Win11Debloat** (Raphire, 50k stars) | App removal, telemetry, UI tweaks | ~5 (registry-only, no Set-Service) | Good for app + UI cleanup, misses most services |
-| **Chris Titus WinUtil** | App removal, tweaks, presets | ~6 (CscService, DiagTrack, MapsBroker, StorSvc, SharedAccess, lfsvc) | Conservative, misses 35+ Tier-1 services. ⚠️ Advanced tweaks can break fullscreen gaming — see `windows-gaming/windows-gaming-fullscreen-corruption` skill. **Also misses AMD/ASUS task scheduler bloat** (AMDScoSupportTypeUpdate, StartCN, StartDVR, ModifyLinkUpdate) that can add 3-5W idle drain on Zephyrus G14.
+| **Chris Titus WinUtil** | App removal, tweaks, presets | ~6 (CscService, DiagTrack, MapsBroker, StorSvc, SharedAccess, lfsvc) | Conservative, misses 35+ Tier-1 services. ⚠️ Advanced tweaks can break fullscreen gaming — see `windows-debugging` for display-mode fixes. **Also misses AMD/ASUS task scheduler bloat** (AMDScoSupportTypeUpdate, StartCN, StartDVR, ModifyLinkUpdate) that can add 3-5W idle drain on Zephyrus G14.
 | **Simeon Windows-Optimize-Debloat** | Privacy + debloat | ~10 (Maps, DoSvc, OneSync, Messaging, etc.) | More aggressive but still partial |
 | **O&O ShutUp10++** | Privacy registry toggles | 0 service changes | GUI privacy tool only |
 

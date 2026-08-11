@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Hermes%20Agent-harness-7c3aed?style=for-the-badge&logo=python&logoColor=white" alt="Hermes Agent harness"/>
   <img src="https://img.shields.io/badge/plugins-4-22c55e?style=for-the-badge" alt="4 plugins"/>
-  <img src="https://img.shields.io/badge/skills-17-0ea5e9?style=for-the-badge" alt="17 skills"/>
+  <img src="https://img.shields.io/badge/skills-15-0ea5e9?style=for-the-badge" alt="15 skills"/>
   <img src="https://img.shields.io/badge/scripts-4-f59e0b?style=for-the-badge" alt="4 scripts"/>
   <img src="https://img.shields.io/badge/license-GPLv3-ef4444?style=for-the-badge" alt="GPLv3"/>
 </p>
@@ -9,9 +9,9 @@
 <h1 align="center">agent-skillz</h1>
 
 <p align="center">
-  <b>The personal harness for my <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> setup</b><br/>
-  Plugins · Skills · Scripts — battle-tested on a Windows 11 + WSL2 + AMD Ryzen AI NPU machine,
-  evolved through months of real daily use.
+  <b>A production-grade <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> harness</b><br/>
+  Plugins · Skills · Scripts — battle-tested daily on a Windows 11 + WSL2 + AMD Ryzen AI NPU machine,
+  curated for reuse beyond one setup.
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ Everything here was built to solve a real problem, documented so it stays mainta
 | 🔋 **NPU on demand** | `flm-lifecycle` boots the local inference server only when an NPU tool is called and kills it when the last session ends — zero idle waste |
 | 📊 **Every dollar tracked** | `budget-tracker` estimates cost with Hermes' pricing engine (cache-aware), pulls the real DeepSeek balance, and enforces a budget ceiling |
 | 🕵️ **Total session recall** | `chat-logger` records every API call, tool invocation, and response as compressed JSON-lines, queryable via CLI |
-| 🧠 **15 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to Harbor present-stalls — every fix is a documented playbook, not a memory |
+| 🧠 **13 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to Harbor present-stalls — every fix is a documented playbook, not a memory |
 | 🔒 **Privacy by construction** | No logs, session data, or runtime state is ever committed; the `.gitignore` enforces it |
 
 ## 📦 Plugins
@@ -75,7 +75,7 @@ These four compose into a coherent system:
 
 Procedural knowledge, organized the same way Hermes organizes it — one directory per skill, each with a `SKILL.md` (and references/scripts where the problem demanded them).
 
-### devops · 7
+### devops · 5
 
 | Skill | What it's for |
 |---|---|
@@ -83,8 +83,6 @@ Procedural knowledge, organized the same way Hermes organizes it — one directo
 | [flm-lifecycle](skills/devops/flm-lifecycle/) | Manage the FLM NPU server lifecycle (sessions, ports, models) |
 | [context-hub-api-docs](skills/devops/context-hub-api-docs/) | Pull current API docs via Andrew Ng's Context Hub (`chub`) |
 | [hermes-plugin-development](skills/devops/hermes-plugin-development/) | Build hook-based Hermes plugins |
-| [hermes-tui-configuration](skills/devops/hermes-tui-configuration/) | Configure the Hermes TUI surface |
-| [hermes-voice-mode](skills/devops/hermes-voice-mode/) | Set up and troubleshoot Hermes voice mode |
 | [local-web-crawler](skills/devops/local-web-crawler/) | Local web crawling with crawl4ai — no API keys |
 
 ### windows · 1

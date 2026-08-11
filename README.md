@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Hermes%20Agent-harness-7c3aed?style=for-the-badge&logo=python&logoColor=white" alt="Hermes Agent harness"/>
   <img src="https://img.shields.io/badge/plugins-4-22c55e?style=for-the-badge" alt="4 plugins"/>
-  <img src="https://img.shields.io/badge/skills-47-0ea5e9?style=for-the-badge" alt="47 skills"/>
+  <img src="https://img.shields.io/badge/skills-43-0ea5e9?style=for-the-badge" alt="43 skills"/>
   <img src="https://img.shields.io/badge/scripts-10-f59e0b?style=for-the-badge" alt="10 scripts"/>
   <img src="https://img.shields.io/badge/license-GPLv3-ef4444?style=for-the-badge" alt="GPLv3"/>
 </p>
@@ -41,7 +41,7 @@ Everything here was built to solve a real problem, documented so it stays mainta
 | 🔋 **NPU on demand** | `flm-lifecycle` boots the local inference server only when an NPU tool is called and kills it when the last session ends — zero idle waste |
 | 📊 **Every dollar tracked** | `budget-tracker` estimates cost with Hermes' pricing engine (cache-aware), pulls the real DeepSeek balance, and enforces a budget ceiling |
 | 🕵️ **Total session recall** | `chat-logger` records every API call, tool invocation, and response as compressed JSON-lines, queryable via CLI |
-| 🧠 **45+ skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to Harbor present-stalls — every fix is a documented playbook, not a memory |
+| 🧠 **41 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to Harbor present-stalls — every fix is a documented playbook, not a memory |
 | 🔒 **Privacy by construction** | No logs, session data, or runtime state is ever committed; the `.gitignore` enforces it |
 
 ## 📦 Plugins
@@ -75,7 +75,7 @@ These four compose into a coherent system:
 
 Procedural knowledge, organized the same way Hermes organizes it — one directory per skill, each with a `SKILL.md` (and references/scripts where the problem demanded them).
 
-### devops · 17
+### devops · 16
 
 | Skill | What it's for |
 |---|---|
@@ -94,7 +94,6 @@ Procedural knowledge, organized the same way Hermes organizes it — one directo
 | [third-party-app-diagnostics](skills/devops/third-party-app-diagnostics/) | Diagnose third-party app memory/resource behavior |
 | [windows-debloating](skills/devops/windows-debloating/) | Identify and disable unnecessary Windows services/processes |
 | [windows-software-management](skills/devops/windows-software-management/) | Install/manage Windows software from WSL |
-| [wsl-resource-tuning](skills/devops/wsl-resource-tuning/) | Tune WSL2 memory/CPU/disk via .wslconfig |
 | [wsl-voice-audio](skills/devops/wsl-voice-audio/) | Microphone/speaker audio in WSL (WSLg → Pulse) |
 
 ### windows · 4
@@ -106,11 +105,10 @@ Procedural knowledge, organized the same way Hermes organizes it — one directo
 | [windows-bluetooth-audio](skills/windows/windows-bluetooth-audio/) | Diagnose Bluetooth audio quality collapse |
 | [windows-debugging](skills/windows/windows-debugging/) | Esoteric Windows bugs and proven fixes |
 
-### windows-gaming · 10
+### windows-gaming · 7
 
 | Skill | What it's for |
 |---|---|
-| [crack-emulator-save-migration](skills/windows-gaming/crack-emulator-save-migration/) | Migrate saves when a repack updates |
 | [dlss-management](skills/windows-gaming/dlss-management/) | Scan games for DLSS DLLs, map versions to games |
 | [dlss-manager](skills/windows-gaming/dlss-manager/) | Update a game's DLSS DLLs (SR, frame gen, ray reconstruction) |
 | [game-dlss-audit](skills/windows-gaming/game-dlss-audit/) | Audit installed games across drives for DLSS DLLs |
@@ -118,8 +116,6 @@ Procedural knowledge, organized the same way Hermes organizes it — one directo
 | [playnite-plugin-discovery](skills/windows-gaming/playnite-plugin-discovery/) | Discover/evaluate/install Playnite plugins |
 | [rtss-overlay-configuration](skills/windows-gaming/rtss-overlay-configuration/) | RTSS / MSI Afterburner overlay config |
 | [rutor-game-search](skills/windows-gaming/rutor-game-search/) | rutor.info search → magnet → qBittorrent |
-| [streaming-display-corruption](skills/windows-gaming/streaming-display-corruption/) | Fix display corruption after game-mode switches |
-| [windows-gaming-fullscreen-corruption](skills/windows-gaming/windows-gaming-fullscreen-corruption/) | Fix fullscreen exclusive mode corruption |
 
 ### ml-agents · 5
 
@@ -211,7 +207,7 @@ This repo exists so every harness we build survives reinstalls and forgetfulness
 2. **Plugins get a README** — overview, hooks/tools table, CLI, install, files, privacy notes. No README, no merge.
 3. **Skills stay faithful** — `SKILL.md` plus any `references/` and `scripts/` the skill depends on.
 4. **Runtime state never ships** — `data.json`, `sessions.json`, logs, and `__pycache__` are gitignored. If a harness writes state, keep the state file out of the repo.
-5. **Retired skills** go to `skills/.archive/` rather than being deleted.
+5. **Retired playbooks** go to `skills/.archive/`; one-off incident case studies are removed entirely.
 
 ## 📁 Repository structure
 

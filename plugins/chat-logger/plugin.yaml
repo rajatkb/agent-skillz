@@ -1,0 +1,10 @@
+name: chat-logger
+version: 1.0.0
+description: Logs every chat session to disk — raw API requests/responses, every tool call with timestamps, and session lifecycle
+provides_hooks:
+  - on_session_start
+  - pre_api_request
+  - post_api_request
+  - pre_tool_call
+  - post_tool_call
+  - on_session_end

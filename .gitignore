@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ── Plugin runtime state (never commit session data) ───────────────────
+plugins/**/data.json
+plugins/**/last_report.txt
+plugins/**/sessions.json
+plugins/**/sessions.count
+plugins/**/*.tmp
+*.log
+*.log.gz

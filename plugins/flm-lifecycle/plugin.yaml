@@ -1,0 +1,7 @@
+name: flm-lifecycle
+version: 1.1.0
+description: Starts FLM NPU server on-demand when an NPU tool is called, stops when last session ends
+provides_hooks:
+  - on_session_start
+  - on_session_end
+  - pre_tool_call

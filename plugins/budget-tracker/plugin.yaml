@@ -1,0 +1,7 @@
+name: budget-tracker
+version: 1.0.0
+description: "📊 Track token usage & budget per session — reports prompt/completion/total tokens, estimated cost, and budget progress with a beautiful end-of-session summary"
+provides_hooks:
+  - on_session_start
+  - post_api_request
+  - on_session_end

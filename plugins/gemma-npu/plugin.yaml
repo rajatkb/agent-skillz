@@ -1,0 +1,11 @@
+name: gemma-npu
+version: 1.0.0
+description: "NPU-accelerated tools via Gemma 4 on FLM — summarize, classify, extract JSON, analyze images, and summarize documents. All on-device, zero API cost."
+provides_tools:
+  - summarize_text
+  - summarize_document
+  - extract_from_webpage
+  - classify_text
+  - extract_json
+  - analyze_image
+  - create_plan

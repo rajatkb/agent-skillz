@@ -114,5 +114,5 @@ Deleting GraphicsDrivers registry cache (Configuration/Connectivity/ScaleFactors
 
 ## Related
 
-- `harbor-stremio-client` skill: Harbor-specific logs (harbor-mpv.log at `Roaming/app.harbor/`), settings, and the CW-snapshot grab loop (real but minor contributor, ungated 12s render-API readback — harmless with RTSS gone).
+- Harbor-specific case study: this skill's present-stall section (Harbor as the in-process libmpv example).
 - mpv GitHub #15196 (Windows 11 D3D11 present stutter class, closed unfixed — often actually external hooks/driver).

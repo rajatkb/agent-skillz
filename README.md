@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Hermes%20Agent-harness-7c3aed?style=for-the-badge&logo=python&logoColor=white" alt="Hermes Agent harness"/>
   <img src="https://img.shields.io/badge/plugins-4-22c55e?style=for-the-badge" alt="4 plugins"/>
-  <img src="https://img.shields.io/badge/skills-15-0ea5e9?style=for-the-badge" alt="15 skills"/>
+  <img src="https://img.shields.io/badge/skills-14-0ea5e9?style=for-the-badge" alt="14 skills"/>
   <img src="https://img.shields.io/badge/license-GPLv3-ef4444?style=for-the-badge" alt="GPLv3"/>
 </p>
 
@@ -38,7 +38,7 @@ Everything here was built to solve a real problem, documented so it stays mainta
 | 🔋 **NPU on demand** | `flm-lifecycle` boots the local inference server only when an NPU tool is called and kills it when the last session ends — zero idle waste |
 | 📊 **Every dollar tracked** | `budget-tracker` estimates cost with Hermes' pricing engine (cache-aware), pulls the real DeepSeek balance, and enforces a budget ceiling |
 | 🕵️ **Total session recall** | `chat-logger` records every API call, tool invocation, and response as compressed JSON-lines, queryable via CLI |
-| 🧠 **13 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to Harbor present-stalls — every fix is a documented playbook, not a memory |
+| 🧠 **12 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to mpv present-stall debugging — every fix is a documented playbook, not a memory |
 | 🔒 **Privacy by construction** | No logs, session data, or runtime state is ever committed; the `.gitignore` enforces it |
 
 ## 📦 Plugins
@@ -101,11 +101,10 @@ Procedural knowledge, organized the same way Hermes organizes it — one directo
 | [paper-study-notes](skills/productivity/paper-study-notes/) | Study an arXiv paper → notes in the vault |
 | [research-paper-notes](skills/productivity/research-paper-notes/) | Study/summarize/take notes on papers |
 
-### Specialized · 3
+### Specialized · 2
 
 | Skill | Category | What it's for |
 |---|---|---|
-| [harbor-stremio-client](skills/streaming/harbor-stremio-client/) | streaming | Troubleshoot/tune Harbor (4K HDR → mpv) |
 | [nextjs-personal-site](skills/web-dev/nextjs-personal-site/) | web-dev | Maintain the Next.js + Tailwind personal site |
 | [windows-computer-use](skills/windows-computer-use/) | computer-use | Windows desktop automation via winappcli + UIA |
 
@@ -124,7 +123,7 @@ cp -r plugins/* ~/.hermes/plugins/
 
 # Skills → Hermes skills dir (loaded automatically by name)
 cp -r skills/devops skills/windows skills/windows-gaming \
-      skills/productivity skills/streaming \
+      skills/productivity \
       skills/web-dev \
       skills/windows-computer-use ~/.hermes/skills/
 
@@ -172,7 +171,7 @@ agent-skillz/
 │   └── gemma-npu/          NPU-accelerated tools
 ├── skills/                 procedural knowledge
 │   ├── devops/  windows/  windows-gaming/
-│   ├── productivity/  streaming/  web-dev/
+│   ├── productivity/  web-dev/
 │   ├── windows-computer-use/
 │   └── .archive/           retired playbooks
 └── scripts/                standalone utilities

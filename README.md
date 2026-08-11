@@ -1,8 +1,8 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Hermes%20Agent-harness-7c3aed?style=for-the-badge&logo=python&logoColor=white" alt="Hermes Agent harness"/>
   <img src="https://img.shields.io/badge/plugins-4-22c55e?style=for-the-badge" alt="4 plugins"/>
-  <img src="https://img.shields.io/badge/skills-26-0ea5e9?style=for-the-badge" alt="26 skills"/>
-  <img src="https://img.shields.io/badge/scripts-10-f59e0b?style=for-the-badge" alt="10 scripts"/>
+  <img src="https://img.shields.io/badge/skills-17-0ea5e9?style=for-the-badge" alt="17 skills"/>
+  <img src="https://img.shields.io/badge/scripts-4-f59e0b?style=for-the-badge" alt="4 scripts"/>
   <img src="https://img.shields.io/badge/license-GPLv3-ef4444?style=for-the-badge" alt="GPLv3"/>
 </p>
 
@@ -41,7 +41,7 @@ Everything here was built to solve a real problem, documented so it stays mainta
 | 🔋 **NPU on demand** | `flm-lifecycle` boots the local inference server only when an NPU tool is called and kills it when the last session ends — zero idle waste |
 | 📊 **Every dollar tracked** | `budget-tracker` estimates cost with Hermes' pricing engine (cache-aware), pulls the real DeepSeek balance, and enforces a budget ceiling |
 | 🕵️ **Total session recall** | `chat-logger` records every API call, tool invocation, and response as compressed JSON-lines, queryable via CLI |
-| 🧠 **24 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to Harbor present-stalls — every fix is a documented playbook, not a memory |
+| 🧠 **15 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to Harbor present-stalls — every fix is a documented playbook, not a memory |
 | 🔒 **Privacy by construction** | No logs, session data, or runtime state is ever committed; the `.gitignore` enforces it |
 
 ## 📦 Plugins
@@ -75,37 +75,28 @@ These four compose into a coherent system:
 
 Procedural knowledge, organized the same way Hermes organizes it — one directory per skill, each with a `SKILL.md` (and references/scripts where the problem demanded them).
 
-### devops · 9
+### devops · 7
 
 | Skill | What it's for |
 |---|---|
 | [amd-npu](skills/devops/amd-npu/) | Detect, validate, and use the AMD Ryzen AI NPU (XDNA/XDNA2) |
 | [flm-lifecycle](skills/devops/flm-lifecycle/) | Manage the FLM NPU server lifecycle (sessions, ports, models) |
 | [context-hub-api-docs](skills/devops/context-hub-api-docs/) | Pull current API docs via Andrew Ng's Context Hub (`chub`) |
-| [hermes-browser](skills/devops/hermes-browser/) | Configure and use Hermes' browser automation |
 | [hermes-plugin-development](skills/devops/hermes-plugin-development/) | Build hook-based Hermes plugins |
 | [hermes-tui-configuration](skills/devops/hermes-tui-configuration/) | Configure the Hermes TUI surface |
 | [hermes-voice-mode](skills/devops/hermes-voice-mode/) | Set up and troubleshoot Hermes voice mode |
 | [local-web-crawler](skills/devops/local-web-crawler/) | Local web crawling with crawl4ai — no API keys |
-| [playnite-theme-development](skills/devops/playnite-theme-development/) | Playnite fullscreen theme modding (.pth) |
 
-### windows · 4
+### windows · 1
 | Skill | What it's for |
 |---|---|
-| [asus-rog-power-thermal](skills/windows/asus-rog-power-thermal/) | Power/thermal diagnosis on ASUS ROG laptops |
-| [glazewm-configuration](skills/windows/glazewm-configuration/) | Configure and tune the GlazeWM tiling window manager |
-| [windows-bluetooth-audio](skills/windows/windows-bluetooth-audio/) | Diagnose Bluetooth audio quality collapse |
 | [windows-debugging](skills/windows/windows-debugging/) | Esoteric Windows bugs and proven fixes |
 
-### windows-gaming · 5
+### windows-gaming · 1
 
 | Skill | What it's for |
 |---|---|
 | [dlss-manager](skills/windows-gaming/dlss-manager/) | Update a game's DLSS DLLs (SR, frame gen, ray reconstruction) |
-| [game-save-recovery](skills/windows-gaming/game-save-recovery/) | Recover saves when they stop loading |
-| [playnite-plugin-discovery](skills/windows-gaming/playnite-plugin-discovery/) | Discover/evaluate/install Playnite plugins |
-| [rtss-overlay-configuration](skills/windows-gaming/rtss-overlay-configuration/) | RTSS / MSI Afterburner overlay config |
-| [rutor-game-search](skills/windows-gaming/rutor-game-search/) | rutor.info search → magnet → qBittorrent |
 
 ### productivity · 3
 
@@ -135,11 +126,7 @@ Standalone utilities. WSL scripts live in [`scripts/`](scripts/), Windows PowerS
 |---|---|
 | [research.py](scripts/research.py) | NPU-assisted multi-source research → `crawl_sessions/<slug>/` (summary, synthesis, stats) |
 | [dlss_manager.py](scripts/dlss_manager.py) | DLSS DLL update manager (super resolution, frame gen, ray reconstruction) |
-| [rutor-search.py](scripts/rutor-search.py) / [.sh](scripts/rutor-search.sh) | rutor.info torrent search → magnet link |
-| [flight-search.py](scripts/flight-search.py) | Flight search automation (paired with the windows-computer-use skill) |
 | [cdp-bridge.py](scripts/cdp-bridge.py) | Chrome DevTools Protocol bridge for browser automation |
-| [windows/rutor-search.ps1](scripts/windows/rutor-search.ps1) | Windows-side rutor search (winappcli-friendly) |
-| [windows/check-focus.ps1](scripts/windows/check-focus.ps1) | Focus Assist / quiet-hours status |
 | [windows/hermes-notify.ps1](scripts/windows/hermes-notify.ps1) | Windows toast notification bridge for Hermes |
 
 ## 🚀 Getting started

@@ -534,7 +534,6 @@ The output captures ALL action results. The terminal session persists between `;
 
 **Before scripting UI interactions** for a web app, check if URL parameters can replace form-filling entirely:
 
-- Google Flights: `https://www.google.com/travel/flights?q=Flights+to+<TO>+from+<FROM>+on+<YYYY-MM-DD>+one+way` — see `references/google-flights.md` for full workflow
 - Google Search: `https://google.com/search?q=<query>`
 - YouTube search: `https://youtube.com/results?search_query=<query>`
 - Maps directions: `https://google.com/maps/dir/<from>/<to>`
@@ -546,14 +545,14 @@ This replaces 5-15 UIA interaction steps with a single `Start-Process chrome -Ar
 ### Example: Flight Search (corrected workflow — CDP bridge first)
 
 **CRITICAL: This is the corrected approach. Do NOT use Start-Process chrome before bridge.**
-See `references/amazon-flights.md` and `references/google-flights.md` for full workflows.
+See `references/amazon-flights.md` for the full workflow.
 
 ```
 Step 1: Kill Chrome        → powershell.exe "Get-Process chrome | Stop-Process -Force"
 Step 2: Start bridge       → python3 cdp-bridge.py --port 9350 --token <TOKEN>
 Step 3: Navigate via URL   → page.goto(search-URL, timeout=45000) via TCP command server
 Step 4: Read results       → page.evaluate("document.body.innerText") via TCP command server
-Step 5: Compare platforms  → page.goto(google-flights-URL), then read results
+Step 5: Compare platforms  → page.goto(other search-URL), then read results
 Step 6: Kill bridge        → pkill -f cdp-bridge.py
 DeepSeek:                  Parse flight data from page text, present to user
 Total: ~6 terminal calls + 0 DeepSeek tokens for data extraction

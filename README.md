@@ -37,7 +37,7 @@ Everything here was built to solve a real problem, documented so it stays mainta
 
 | | |
 |---|---|
-| 🪙 **$0 cloud cost for local inference** | `gemma-npu` runs Gemma 4 on the Ryzen AI NPU — every summarize/classify/vision call offloaded from the API bill, with savings accounted for |
+| 🪙 **Hybrid inference: cloud + local NPU** | `gemma-npu` runs Gemma 4 on the Ryzen AI NPU — summarize/classify/vision calls run on-device at $0, offloaded from the API bill, with the avoided cost tracked |
 | 🔋 **NPU on demand** | `flm-lifecycle` boots the local inference server only when an NPU tool is called and kills it when the last session ends — zero idle waste |
 | 📊 **Every dollar tracked** | `budget-tracker` estimates cost with Hermes' pricing engine (cache-aware), pulls the real DeepSeek balance, and enforces a budget ceiling |
 | 🕵️ **Total session recall** | `chat-logger` records every API call, tool invocation, and response as compressed JSON-lines, queryable via CLI |

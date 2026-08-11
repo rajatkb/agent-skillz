@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Hermes%20Agent-harness-7c3aed?style=for-the-badge&logo=python&logoColor=white" alt="Hermes Agent harness"/>
   <img src="https://img.shields.io/badge/plugins-4-22c55e?style=for-the-badge" alt="4 plugins"/>
-  <img src="https://img.shields.io/badge/skills-14-0ea5e9?style=for-the-badge" alt="14 skills"/>
+  <img src="https://img.shields.io/badge/skills-15-0ea5e9?style=for-the-badge" alt="15 skills"/>
   <img src="https://img.shields.io/badge/license-GPLv3-ef4444?style=for-the-badge" alt="GPLv3"/>
 </p>
 
@@ -38,7 +38,7 @@ Everything here was built to solve a real problem, documented so it stays mainta
 | 🔋 **NPU on demand** | `flm-lifecycle` boots the local inference server only when an NPU tool is called and kills it when the last session ends — zero idle waste |
 | 📊 **Every dollar tracked** | `budget-tracker` estimates cost with Hermes' pricing engine (cache-aware), pulls the real DeepSeek balance, and enforces a budget ceiling |
 | 🕵️ **Total session recall** | `chat-logger` records every API call, tool invocation, and response as compressed JSON-lines, queryable via CLI |
-| 🧠 **12 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to mpv present-stall debugging — every fix is a documented playbook, not a memory |
+| 🧠 **13 skills of hard-won knowledge** | From DWM MPO corruption fixes to DLSS DLL audits to mpv present-stall debugging — every fix is a documented playbook, not a memory |
 | 🔒 **Privacy by construction** | No logs, session data, or runtime state is ever committed; the `.gitignore` enforces it |
 
 ## 📦 Plugins
@@ -93,10 +93,11 @@ Procedural knowledge, organized the same way Hermes organizes it — one directo
 |---|---|
 | [dlss-manager](skills/windows-gaming/dlss-manager/) | Update a game's DLSS DLLs (SR, frame gen, ray reconstruction) |
 
-### productivity · 3
+### productivity · 4
 
 | Skill | What it's for |
 |---|---|
+| [agent-skillz-sync](skills/productivity/agent-skillz-sync/) | Sync local skills → repo with automatic PII scrub and leak gate |
 | [hermes-self-maintenance](skills/productivity/hermes-self-maintenance/) | Scheduled cron jobs that audit and prune |
 | [paper-study-notes](skills/productivity/paper-study-notes/) | Study an arXiv paper → notes in the vault |
 | [research-paper-notes](skills/productivity/research-paper-notes/) | Study/summarize/take notes on papers |
@@ -156,6 +157,7 @@ This repo exists so every harness we build survives reinstalls and forgetfulness
 4. **Runtime state never ships** — `data.json`, `sessions.json`, logs, and `__pycache__` are gitignored. If a harness writes state, keep the state file out of the repo.
 5. **Retired playbooks** go to `skills/.archive/`; one-off incident case studies are removed entirely.
 6. **No personal data** — usernames, home dirs, vault paths, and real game/folder paths become `<user>` / `<username>` / `<Game>` placeholders before committing. Local copies may keep real paths (they need them to run); the repo stays portable.
+7. **Sync via skill** — `agent-skillz-sync` (scripts/sync_skillz.sh) copies local skills in with the PII scrub applied, never `rsync --delete`s, and runs a leak gate before reporting success.
 
 ## 📁 Repository structure
 

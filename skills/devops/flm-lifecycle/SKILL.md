@@ -111,6 +111,8 @@ _NPU_TOOLS = {
 }
 ```
 
+> ⚠️ **`create_plan` is FLM-backed but NOT in `_NPU_TOOLS`** (observed Aug 2026). The gemma-npu plugin registers `create_plan` as its 7th tool — it decomposes goals via the local Gemma 4 model — but the lifecycle plugin's auto-start set omits it, so calling `create_plan` with FLM down does NOT trigger the `pre_tool_call` start; it hangs and fails with `FLM request failed: Request timed out`. Workaround: run `bash ~/.hermes/scripts/flm-up.sh` manually before `create_plan`, or add `"create_plan"` to `_NPU_TOOLS` in `~/.hermes/plugins/flm-lifecycle/__init__.py` (and mirror the fix to the agent-skillz repo copy).
+
 ### Implementation
 
 ```python

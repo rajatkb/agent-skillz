@@ -49,7 +49,7 @@ Verified on 0.310.5.0 (Aug 2026): no RR preset section in `dlsstweaks.ini` (`[DL
 - Calls used: `nvapi_QueryInterface(hash)` → `NvAPI_Initialize` → `NvAPI_DRS_CreateSession` → `LoadSettings` → `FindApplicationByName` (per-game profile) or `CreateProfile`+`CreateApplication` → `GetSetting`/`SetSetting`/`DeleteProfileSetting` → `SaveSettings` → `DestroySession`. Emits one machine-readable line `RR=0xXXXXXXXX` or `RR=unset` (a deleted setting reads back as value 0 → reported as unset).
 - Value map in script: D=`0x04` … F=`0x06`, latest=`0xFFFFFF`, default=`0x00` (→ unset/delete).
 - Requires `nvapi64.dll` present (System32 — this box: driver 32.0.16.1074). Non-admin OK (ProgramData DRS store is user-writable; DLSS Swapper runs unprivileged too).
-- WSL invocation pitfall: `dlss_manager.py` must exec the helper via the WSL path (`/mnt/c/Users/<user>/.hermes/dlss-rr/py/python.exe`) while passing the script path as a Windows path (the helper python.exe opens it).
+- WSL invocation: `dlss_manager.py` execs the compiled helper directly via WSL interop (`/mnt/c/Users/<user>/.hermes/dlss-rr/dlss_rr.exe`) — no script/path translation needed.
 
 **Argparse pitfall (bit us Aug 2026):** two `nargs="?"` positionals where one is `type=int` collide — `rr-preset f` fed 'f' into the int-typed `hud_value` → `error: argument hud_value: invalid int value: 'f'`. Fix: declare both positionals `nargs="*"` (no type) and convert per-command in the dispatch (`int(...)` for tweak-hud, string for rr-preset).
 
@@ -64,7 +64,7 @@ Caveats stated to the user (and true): driver updates / NVIDIA App can clear ove
 - **Symptom:** `status` prints `RR preset (driver override): F` but the HUD shows D → enable flag missing.
 - **Verification gap (important):** `status`/`rr_override_read` proves the DRS value only, NOT the runtime effect. The DLSS HUD (`tweak-hud 1`) is the runtime proof — always verify with the HUD after changing the RR preset.
 - **Predefined-profile discovery:** the driver ships its own profile for shipped games ("Halo: Campaign Evolved", `predefined=True`). `FindApplicationByName(exe)` matched it, so the per-game `CreateProfile` path never ran — our writes landed in the driver's own profile (correct behavior).
-- **RESOLVED (Aug 2026):** `dlss_rr.py` set/unset handles BOTH IDs as a pair — `set` writes `0x10E41DF7` + enable `0x10E41E02=1`; `unset` deletes both. The old PowerShell gap (preset-only, silently ignored) no longer exists.
+- **RESOLVED (Aug 2026):** `dlss_rr.cs`/`dlss_rr.exe` set/unset handles BOTH IDs as a pair — `set` writes `0x10E41DF7` + enable `0x10E41E02=1`; `unset` deletes both. The old PowerShell gap (preset-only, silently ignored) no longer exists.
 
 ## Sources
 

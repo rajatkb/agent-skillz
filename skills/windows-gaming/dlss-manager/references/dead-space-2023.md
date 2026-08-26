@@ -3,7 +3,7 @@
 Researched Aug 11, 2026 via research.py crawler session `dead-space-2023-remake-dlss-4-5-transformer-preset-recommend` + direct source verification.
 
 ## Game facts (verified)
-- Install: `/mnt/d/SteamLibrary/steamapps/common/Dead Space (2023)` (Steam appid 1693980)
+- Install: `/mnt/d/<Game>` (Steam appid 1693980)
 - EXE: `Dead Space.exe` (Frostbite — NOT UE, so no `*-Win64-Shipping.exe`)
 - **Ships DLSS 2.5.0** — community calls it one of the blurriest DLSS implementations ever shipped
 - **Streamline-based** (`sl.interposer.dll`, `sl.dlss.dll`, `sl.reflex.dll` present, **Streamline 1.1.1 = 2023 era**) — only SR DLL (`nvngx_dlss.dll`), no FG/RR at root

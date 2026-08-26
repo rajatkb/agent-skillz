@@ -164,9 +164,44 @@ try {
 } catch { Write-Output "0.0.0.0" }
 """
 
-_USERPROFILE = os.environ.get("USERPROFILE", r"C:\Users\Public")  # Windows env var, inherited into WSL
-_WIN_PS1_PATH = _USERPROFILE + r"\AppData\Local\Temp\dlss_getver.ps1"
-_WSL_PS1_PATH = "/mnt/c" + _USERPROFILE[2:].replace("\\", "/") + "/AppData/Local/Temp/dlss_getver.ps1"
+_USERPROFILE = os.environ.get("USERPROFILE", "")  # Windows env var, NOT always inherited into WSL
+
+
+def _resolve_win_userprofile() -> str:
+    """Windows user profile dir (e.g. C:\\Users\\<user>).
+
+    USERPROFILE is usually inherited into WSL but can be absent (observed Aug
+    2026 on this box). Fall back to asking cmd.exe directly, then to a sane
+    default. Never silently produce a path that cannot exist.
+    """
+    if _USERPROFILE:
+        return _USERPROFILE
+    try:
+        out = subprocess.run(
+            ["cmd.exe", "/c", "echo %USERPROFILE%"],
+            capture_output=True, text=True, timeout=30,
+        )
+        for line in reversed((out.stdout or "").strip().splitlines()):
+            m = re.match(r"^([A-Za-z]:\\[^\r\n]*)$", line.strip())
+            if m:
+                return m.group(1)
+    except Exception:
+        pass
+    # Last resort: derive from the WSL home (C:\Users\<wsluser>) — a readable
+    # temp dir is guaranteed to exist for the current user.
+    home_win = to_win_path(os.path.expanduser("~"))
+    if home_win and home_win.lower().startswith(("c:", "d:", "e:", "f:")):
+        return os.path.dirname(home_win.rstrip("\\"))
+    return r"C:\Users\Public"
+
+
+def _ps1_paths() -> tuple[str, str]:
+    """(windows_path, wsl_path) for the version-read PS1 helper."""
+    up = _resolve_win_userprofile().rstrip("\\")
+    rel = r"\AppData\Local\Temp\dlss_getver.ps1"
+    win = up + rel
+    wsl = "/mnt/" + up[0].lower() + up[2:].replace("\\", "/") + rel.replace("\\", "/")
+    return win, wsl
 
 
 def read_dll_version(dll_path: str) -> str:
@@ -175,19 +210,26 @@ def read_dll_version(dll_path: str) -> str:
     Returns dotted form ('310.2.1.0') even though the PE resource stores
     commas — keeps output/JSON consistent.
     """
+    win_ps1, wsl_ps1 = _ps1_paths()
     try:
-        with open(_WSL_PS1_PATH, "w", encoding="utf-8") as f:
+        os.makedirs(os.path.dirname(wsl_ps1), exist_ok=True)
+        with open(wsl_ps1, "w", encoding="utf-8") as f:
             f.write(_VER_PS1_TEMPLATE)
-    except Exception:
-        pass
+    except Exception as e:
+        log(f"  (warning: could not write PS1 helper to {wsl_ps1}: {e})")
     win_path = to_win_path(os.path.abspath(dll_path))
     try:
         out = subprocess.run(
             ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
-             "-File", _WIN_PS1_PATH, "-Path", win_path],
+             "-File", win_ps1, "-Path", win_path],
             capture_output=True, text=True, timeout=60,
         )
-        raw = (out.stdout or "").strip().splitlines()[-1] if out.stdout.strip() else "0.0.0.0"
+        raw = "0.0.0.0"
+        for line in reversed((out.stdout or "").strip().splitlines()):
+            line = line.strip()
+            if line and re.match(r"^\d+([,.]\d+)+$", line):
+                raw = line
+                break
     except Exception as e:
         log(f"  (version read failed for {dll_path}: {e})")
         raw = "0.0.0.0"
@@ -482,6 +524,15 @@ def cmd_status(root: str, args) -> None:
         print(f"\nDLSSTweaks: installed (wrapper {tw.get('wrapper')}, v{tw.get('version')}, "
               f"zip: {tw.get('zip')})")
         print(f"  EXE dir: {tw.get('exe_dir')}")
+        hud = read_ini_key(os.path.join(tw["exe_dir"], "dlsstweaks.ini"), "DLSS", "OverrideDlssHud")
+        print(f"  DLSS HUD (OverrideDlssHud): {hud if hud is not None else 'unset (0)'}")
+    exe = find_game_exe(root)
+    if exe:
+        try:
+            rr = rr_override_read(os.path.basename(exe))
+        except Exception:
+            rr = "?"
+        print(f"RR preset (driver override): {rr or 'unset (game default)'}")
 
 
 def cmd_undo(root: str, args) -> None:
@@ -821,6 +872,139 @@ def cmd_tweak_config(root: str, args) -> None:
         "edit live via DLSSTweaksConfig.exe if needed.")
 
 
+def read_ini_key(ini_path: str, section: str, key: str) -> str | None:
+    """Return the current value of key under section, or None if absent."""
+    try:
+        with open(ini_path, "r", encoding="utf-8-sig") as f:
+            lines = f.read().splitlines()
+    except OSError:
+        return None
+    cur_sec: str | None = None
+    for ln in lines:
+        s = ln.strip()
+        if s.startswith("[") and s.endswith("]"):
+            cur_sec = s[1:-1].strip().lower()
+            continue
+        if cur_sec != section.lower() or s.startswith(";") or "=" not in s:
+            continue
+        k, _, v = s.partition("=")
+        if k.strip().lower() == key.lower():
+            return v.strip()
+    return None
+
+
+HUD_VALUES = {-1, 0, 1, 2}  # DLSSTweaks OverrideDlssHud: 0 off/default, 1 on, 2 alt draw, -1 force off
+
+
+def cmd_tweak_hud(root: str, args) -> None:
+    """Toggle the DLSS debug HUD overlay (OverrideDlssHud) in dlsstweaks.ini."""
+    if args.hud_value is None:
+        die("tweak-hud needs a value: 0 (off/default), 1 (on), 2 (alt draw), -1 (force off)")
+    val = args.hud_value
+    if val not in HUD_VALUES:
+        die(f"Invalid HUD value {val!r} (expected one of {sorted(HUD_VALUES)})")
+    state = load_state(root)
+    tw = state.get("dlsstweaks", {})
+    if not tw.get("installed"):
+        die("DLSSTweaks not installed for this game — run 'tweak-install --tweak-zip <zip>' first")
+    ini = os.path.join(tw["exe_dir"], "dlsstweaks.ini")
+    if not os.path.isfile(ini):
+        die(f"dlsstweaks.ini not found at {ini}")
+
+    prev = read_ini_key(ini, "DLSS", "OverrideDlssHud") or "unset"
+    bdir = os.path.join(root, MGMT_DIR, "backups", "dlsstweaks")
+    os.makedirs(bdir, exist_ok=True)
+    bpath = os.path.join(bdir, f"{time.strftime('%Y%m%d_%H%M%S')}_dlsstweaks.ini")
+    shutil.copy2(ini, bpath)
+    log(f"backed up ini -> {os.path.relpath(bpath, root)}")
+
+    changes = apply_profile_to_ini(ini, {"dlss": {"OverrideDlssHud": val}})
+    for c in changes:
+        log(f"  set {c}  (was {prev})")
+    add_history(state, "tweak-hud",
+                {"value": val, "previous": prev, "backup": os.path.relpath(bpath, root)})
+    save_state(root, state)
+    log("HUD takes effect on the next DLSS init — relaunch the game or toggle fullscreen/resolution.")
+
+
+# ---------------------------------------------------------------------------
+# Driver-level DLSS Ray Reconstruction preset override (NvAPI DRS)
+# ---------------------------------------------------------------------------
+# Setting NGX_DLSS_RR_OVERRIDE_RENDER_PRESET_SELECTION_ID (0x10E41DF7) in the
+# game's driver profile forces which RR model the feature uses: D=0x04, E=0x05,
+# F=0x06 (DLSS 4.5 RR model), 0xFFFFFF = always-latest. Written via
+# NvAPIWrapper + PowerShell (dlss-rr.ps1) — same mechanism as DLSS Swapper /
+# NVIDIA App "DLSS Override", but per-game by exe.
+RR_PRESET_VALUES = {"default": 0, "a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6,
+                    "latest": 0xFFFFFF}
+RR_PRESET_LABELS = {v: k.upper() for k, v in RR_PRESET_VALUES.items() if v}
+def _win_to_wsl_path(p: str) -> str:
+    """'C:\\Users\\<user>\\...' -> '/mnt/c/Users/<user>/...'"""
+    m = re.match(r"^([A-Za-z]):\\(.*)$", p)
+    if not m:
+        return p
+    return f"/mnt/{m.group(1).lower()}/{m.group(2).replace(chr(92), '/')}"
+
+
+# Compiled C# NVAPI DRS helper (dlss_rr.cs source mirrored in the skill; exe compiled
+# with the built-in .NET Framework csc.exe — no Python/PowerShell on Windows).
+# Resolved from the Windows user profile (portable — no hardcoded username).
+DLSS_RR_EXE = _win_to_wsl_path(os.path.join(_resolve_win_userprofile(),
+                                            ".hermes", "dlss-rr", "dlss_rr.exe"))
+
+
+def _rr_run(args_list: list[str]) -> subprocess.CompletedProcess:
+    return subprocess.run([DLSS_RR_EXE] + args_list,
+                          capture_output=True, text=True, timeout=60)
+
+
+def rr_override_read(exe_name: str) -> str | None:
+    """Read the RR preset override for exe_name. None = unset. Raises on failure."""
+    out = _rr_run([exe_name, "read"])
+    for line in reversed(out.stdout.splitlines()):
+        line = line.strip()
+        if line.startswith("RR="):
+            val = line[3:]
+            if val == "unset":
+                return None
+            num = int(val, 16)
+            return RR_PRESET_LABELS.get(num, f"0x{num:X}")
+    raise RuntimeError(f"dlss_rr read failed: {out.stdout[-200:]!r} {out.stderr[-200:]!r}")
+
+
+def cmd_rr_preset(root: str, args) -> None:
+    """Set/remove the driver-level DLSS Ray Reconstruction preset override."""
+    if not args.rr_preset_value:
+        die("rr-preset needs a value: A-F, 'latest', or 'default' (remove the override)")
+    key = args.rr_preset_value.strip().lower()
+    if key not in RR_PRESET_VALUES:
+        die(f"Invalid RR preset '{args.rr_preset_value}' (expected A-F, latest, default)")
+    exe = find_game_exe(root)
+    if not exe:
+        die("Could not determine the game executable")
+    exe_name = os.path.basename(exe)
+    try:
+        prev = rr_override_read(exe_name)
+    except RuntimeError as e:
+        die(str(e))
+    val = RR_PRESET_VALUES[key]
+    action = "unset" if val == 0 else "set"
+    args_list = [exe_name, action] + ([str(val)] if action == "set" else [])
+    try:
+        out = _rr_run(args_list)
+    except Exception as e:
+        die(f"dlss_rr failed: {e}")
+    if out.returncode != 0:
+        die(f"dlss_rr failed ({out.returncode}): {out.stderr[-300:]}")
+    state = load_state(root)
+    add_history(state, "rr-preset", {"preset": key, "previous": prev, "exe": exe_name})
+    save_state(root, state)
+    shown = key.upper() if key != "default" else "default (override removed)"
+    log(f"RR preset override: {shown} for {exe_name} (was {prev or 'unset'})")
+    log("Takes effect on the next DLSS init — relaunch the game. Driver updates / "
+        "NVIDIA App can reset driver-level overrides.")
+
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -833,7 +1017,10 @@ def main() -> None:
     ap.add_argument("game_root", help="Path to the game root dir (/mnt/d/... or D:\\...)")
     ap.add_argument("command", nargs="?", default="update",
                     choices=["update", "discover", "status", "undo",
-                             "tweak-install", "tweak-remove", "tweak-config"])
+                             "tweak-install", "tweak-remove", "tweak-config", "tweak-hud",
+                             "rr-preset"])
+    ap.add_argument("positionals", nargs="*", default=None,
+                    help="command value: tweak-hud <0|1|2|-1>, rr-preset <A-F|latest|default>")
     ap.add_argument("--version", default=None, help="Pin DLSS version (e.g. 310.7.0)")
     ap.add_argument("--components", default=None,
                     help="Comma list: sr,fg,rr (nvngx_dlss/nvngx_dlssg/nvngx_dlssd)")
@@ -878,6 +1065,15 @@ def main() -> None:
         cmd_tweak_remove(root, args)
     elif args.command == "tweak-config":
         cmd_tweak_config(root, args)
+    elif args.command == "tweak-hud":
+        try:
+            args.hud_value = int(args.positionals[0]) if args.positionals else None
+        except (TypeError, ValueError, IndexError):
+            die(f"tweak-hud needs an integer value (0/1/2/-1), got {args.positionals!r}")
+        cmd_tweak_hud(root, args)
+    elif args.command == "rr-preset":
+        args.rr_preset_value = args.positionals[0] if args.positionals else None
+        cmd_rr_preset(root, args)
 
 
 if __name__ == "__main__":
